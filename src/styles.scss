@@ -1,1 +1,24 @@
-/* You can add global styles to this file, and also import other style files */
+body {
+  color: #333;
+  font-family: 'Roboto Thin', 'Arial', 'sans-serif';
+  font-size: 20px;
+}
+
+.btn {
+  padding: 20px 12px;
+  border: 2px solid #ccc;
+  border-radius: 4px;
+  background-color: #eee;
+  font-size: 24px;
+  font-weight: bold;
+  color: #333;
+  cursor: pointer;
+
+  &:hover {
+    background-color: #ccc;
+  }
+
+  &:active {
+    opacity: .5;
+  }
+}

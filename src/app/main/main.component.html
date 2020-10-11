@@ -1,1 +1,17 @@
-<p>main works!</p>
+<button class="btn"
+        (click)="photos.click()">
+  Загрузить фото счётчиков
+</button>
+<input #photos
+       type="file"
+       name="counters"
+       id="counters"
+       (change)="onLoad($event)">
+
+<img *ngIf="imgSrc"
+     #img
+     class="counter-img"
+     [src]="imgSrc"
+     alt="pic">
+
+<p class="recognized-text">{{ocrResult}}</p>
