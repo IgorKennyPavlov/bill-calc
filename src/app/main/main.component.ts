@@ -11,6 +11,12 @@ export class MainComponent {
 
   ocrResult: string
   imgSrc = ''
+  workerInfo: any = null
+
+  get loadingProgress(): string {
+    const w = this.workerInfo
+    return `${ w.status }: ${ ~~w.progress * 100 }%`
+  }
 
   async onLoad(e: Event) {
     const input = (e as InputEvent).target as HTMLInputElement
@@ -28,7 +34,10 @@ export class MainComponent {
 
   private async _handleImgs(files: FileList) {
     const worker = createWorker({
-      // logger: m => console.log(m)
+      logger: workerInfo => {
+        this.workerInfo = workerInfo
+        // console.log({ workerInfo })
+      }
     })
     await worker.load()
     await worker.loadLanguage('eng')
@@ -36,6 +45,7 @@ export class MainComponent {
     await worker.setParameters({ tessedit_char_whitelist: '0123456789.,' })
     const { data: { text } } = await worker.recognize(files[0])
     this.ocrResult = text
+    this.workerInfo = null
     await worker.terminate()
   }
 

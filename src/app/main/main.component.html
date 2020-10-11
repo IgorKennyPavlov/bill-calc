@@ -8,10 +8,20 @@
        id="counters"
        (change)="onLoad($event)">
 
+
 <img *ngIf="imgSrc"
      #img
      class="counter-img"
      [src]="imgSrc"
      alt="pic">
 
-<p class="recognized-text">{{ocrResult}}</p>
+<h2 *ngIf="workerInfo; else ocrResultTpl"
+    class="loading-progress">
+  {{loadingProgress}}
+</h2>
+
+<ng-template #ocrResultTpl>
+  <p class="recognized-text">
+    {{ocrResult}}
+  </p>
+</ng-template>
