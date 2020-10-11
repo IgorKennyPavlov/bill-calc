@@ -1,4 +1,4 @@
-import { Component, ElementRef, ViewChild } from '@angular/core'
+import { Component } from '@angular/core'
 import { createWorker } from 'tesseract.js'
 
 @Component({
@@ -7,10 +7,7 @@ import { createWorker } from 'tesseract.js'
   styleUrls: ['./main.component.scss']
 })
 export class MainComponent {
-  @ViewChild('img', { read: ElementRef }) imgElRef: ElementRef<HTMLImageElement>
-
-  ocrResult: string
-  imgSrc = ''
+  ocrResults: number[] = []
   workerInfo: any = null
 
   get loadingProgress(): string {
@@ -21,38 +18,45 @@ export class MainComponent {
   async onLoad(e: Event) {
     const input = (e as InputEvent).target as HTMLInputElement
     const files = input.files
-    const file = files[0]
 
-    try {
-      this.imgSrc = await this._toBase64(file)
-    } catch (err) {
-      console.log(err)
+    if (!files.length) {
+      return
     }
 
-    this._handleImgs(files)
+    this.ocrResults = []
+
+    const canvas = document.createElement('canvas')
+    const ctx = canvas.getContext('2d')
+    const res = await Promise.all(
+      Array.from(files).map(file => new Promise<string>((resolve, reject) => {
+        try {
+          const img = new Image()
+          img.addEventListener('load', async () => {
+            ctx.filter = 'grayscale(100%) brightness(2.4) contrast(10)'
+            ctx.drawImage(img, 0, 0, img.width, img.height, 0, 0, canvas.width, canvas.height)
+            resolve(await this._ocrImg(canvas.toDataURL()))
+          })
+          img.src = URL.createObjectURL(file)
+        } catch (err) {
+          reject(err)
+        }
+      }))
+    )
+
+    this.ocrResults = res.map(counterData => +counterData.slice(0, 5))
   }
 
-  private async _handleImgs(files: FileList) {
+  private async _ocrImg(file: string) {
     const worker = createWorker({
-      logger: workerInfo => {
-        this.workerInfo = workerInfo
-        // console.log({ workerInfo })
-      }
+      logger: workerInfo => this.workerInfo = workerInfo
     })
     await worker.load()
     await worker.loadLanguage('eng')
     await worker.initialize('eng')
     await worker.setParameters({ tessedit_char_whitelist: '0123456789.,' })
-    const { data: { text } } = await worker.recognize(files[0])
-    this.ocrResult = text
+    const { data: { text } } = await worker.recognize(file)
     this.workerInfo = null
     await worker.terminate()
+    return text
   }
-
-  private _toBase64 = (file: File): Promise<string> => new Promise((resolve, reject) => {
-    const reader = new FileReader()
-    reader.readAsDataURL(file)
-    reader.onload = () => resolve(reader.result as string)
-    reader.onerror = error => reject(error)
-  })
 }

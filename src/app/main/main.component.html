@@ -6,14 +6,8 @@
        type="file"
        name="counters"
        id="counters"
+       multiple
        (change)="onLoad($event)">
-
-
-<img *ngIf="imgSrc"
-     #img
-     class="counter-img"
-     [src]="imgSrc"
-     alt="pic">
 
 <h2 *ngIf="workerInfo; else ocrResultTpl"
     class="loading-progress">
@@ -22,6 +16,6 @@
 
 <ng-template #ocrResultTpl>
   <p class="recognized-text">
-    {{ocrResult}}
+    {{ocrResults}}
   </p>
 </ng-template>
