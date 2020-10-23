@@ -9,7 +9,10 @@
   </div>
   <div class="cr-wrapper">
     <h2 class="title electricity">Эл. энергия</h2>
-    <app-counter-recognizer (ocrComplete)="electricity = +$event"></app-counter-recognizer>
+    <app-counter-recognizer brightness='1.4'
+                            contrast="30"
+                            (ocrComplete)="electricity = +$event">
+    </app-counter-recognizer>
   </div>
 </div>
 

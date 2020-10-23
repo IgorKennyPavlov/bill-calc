@@ -1,4 +1,4 @@
-import { Component, ElementRef, EventEmitter, OnDestroy, Output, ViewChild } from '@angular/core'
+import { Component, ElementRef, EventEmitter, Input, OnDestroy, Output, ViewChild } from '@angular/core'
 import { createWorker } from 'tesseract.js'
 import { FormControl } from '@angular/forms'
 import { Subscription } from 'rxjs'
@@ -10,6 +10,9 @@ import { Subscription } from 'rxjs'
 })
 export class CounterRecognizerComponent implements OnDestroy {
   @ViewChild('preview', { read: ElementRef }) previewCanvasRef: ElementRef<HTMLCanvasElement>
+
+  @Input() brightness = '2.4'
+  @Input() contrast = '10'
 
   @Output() ocrComplete = new EventEmitter<string>()
 
@@ -54,7 +57,7 @@ export class CounterRecognizerComponent implements OnDestroy {
         .drawImage(img, 0, 0, img.width, img.height, 0, 0, canvas.width, canvas.height)
 
       // Фильтруем фотку в виртуальном канвасе
-      ctx.filter = 'grayscale(100%) brightness(2.4) contrast(10)'
+      ctx.filter = `grayscale(100%) brightness(${this.brightness}) contrast(${this.contrast})`
       ctx.drawImage(img, 0, 0, img.width, img.height, 0, 0, canvas.width, canvas.height)
 
       // Распознаём, отрезаем до запятой, запоминаем
