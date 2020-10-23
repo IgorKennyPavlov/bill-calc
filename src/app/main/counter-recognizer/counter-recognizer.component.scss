@@ -1,0 +1,31 @@
+:host {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.preview-canvas {
+  width: 100%;
+  border: 1px solid #ccc;
+}
+
+.btn {
+  width: 400px;
+  margin-top: 20px;
+}
+
+input#counters {
+  display: none;
+}
+
+.loading-progress {
+  text-transform: capitalize;
+}
+
+.recognized-text {
+  font-size: 20px;
+  line-height: 20px;
+  width: 5em;
+  margin: 20px 0;
+}

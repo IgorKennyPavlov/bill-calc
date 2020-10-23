@@ -1,21 +1,19 @@
+<div class="counter-recognizers">
+  <div class="cr-wrapper">
+    <h2 class="title cold-water">Холодная вода</h2>
+    <app-counter-recognizer (ocrComplete)="coldWater = +$event"></app-counter-recognizer>
+  </div>
+  <div class="cr-wrapper">
+    <h2 class="title hot-water">Горячая вода</h2>
+    <app-counter-recognizer (ocrComplete)="hotWater = +$event"></app-counter-recognizer>
+  </div>
+  <div class="cr-wrapper">
+    <h2 class="title electricity">Эл. энергия</h2>
+    <app-counter-recognizer (ocrComplete)="electricity = +$event"></app-counter-recognizer>
+  </div>
+</div>
+
 <button class="btn"
-        (click)="photos.click()">
-  Загрузить фото счётчиков
+        (click)="countPrice()">
+  Посчитать стоимость
 </button>
-<input #photos
-       type="file"
-       name="counters"
-       id="counters"
-       multiple
-       (change)="onLoad($event)">
-
-<h2 *ngIf="workerInfo; else ocrResultTpl"
-    class="loading-progress">
-  {{loadingProgress}}
-</h2>
-
-<ng-template #ocrResultTpl>
-  <p class="recognized-text">
-    {{ocrResults}}
-  </p>
-</ng-template>

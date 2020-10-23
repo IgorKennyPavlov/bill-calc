@@ -1,22 +1,32 @@
 :host {
   display: flex;
+  align-items: center;
   flex-direction: column;
   justify-content: center;
-  align-items: center;
+}
+
+.counter-recognizers {
+  display: flex;
+  justify-content: space-around;
+  width: 100%;
+}
+
+.cr-wrapper .title {
+  text-align: center;
+
+  &.cold-water {
+    color: blue;
+  }
+
+  &.hot-water {
+    color: red;
+  }
+
+  &.electricity {
+    color: yellow;
+  }
 }
 
 .btn {
-  width: 400px;
-}
-
-input#counters {
-  display: none;
-}
-
-.loading-progress {
-  text-transform: capitalize;
-}
-
-.recognized-text {
-  margin: 20px 0;
+  margin-top: 80px;
 }
