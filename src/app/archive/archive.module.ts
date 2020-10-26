@@ -3,8 +3,8 @@ import { CommonModule } from '@angular/common'
 import { RouterModule } from '@angular/router'
 import { ReactiveFormsModule } from '@angular/forms'
 
-import { MainComponent } from './main.component'
-import { CounterRecognizerComponent } from './counter-recognizer/counter-recognizer.component'
+import { ArchiveComponent } from './archive.component'
+import { ArchiveService } from './archive.service'
 
 @NgModule({
   imports: [
@@ -13,12 +13,13 @@ import { CounterRecognizerComponent } from './counter-recognizer/counter-recogni
     RouterModule.forChild([
       {
         path: '',
-        component: MainComponent
+        component: ArchiveComponent
       }
     ]),
     ReactiveFormsModule
   ],
-  declarations: [MainComponent, CounterRecognizerComponent]
+  providers: [ArchiveService],
+  declarations: [ArchiveComponent]
 })
-export class MainModule {
+export class ArchiveModule {
 }

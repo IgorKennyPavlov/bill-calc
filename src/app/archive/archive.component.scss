@@ -1,0 +1,19 @@
+:host {
+  display: flex;
+  flex-direction: column;
+  margin: 20px;
+}
+
+.recording {
+  margin: 20px;
+  padding: 12px;
+  transition: box-shadow .3s, transform .3s;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  box-shadow: 5px 5px 10px;
+
+  &:hover {
+    transform: scale(1.005);
+    box-shadow: 10px 10px 15px;
+  }
+}

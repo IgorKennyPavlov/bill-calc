@@ -1,0 +1,6 @@
+<div *ngFor="let recording of archive"
+     class="recording">
+  <p *ngFor="let entry of recording | keyvalue">
+    {{ entry.key }}: {{entry.value}}
+  </p>
+</div>

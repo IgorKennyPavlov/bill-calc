@@ -1,6 +1,29 @@
 h1 {
-  text-align: center;
-  margin: 0 0 40px;
+  margin: 0;
   padding: 40px 0;
+  text-align: center;
   border-bottom: 1px solid #ccc;
+}
+
+nav {
+  width: 100%;
+  border-bottom: 1px solid #ccc;
+
+  ul {
+    display: flex;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+
+    li a {
+      display: block;
+      padding: 20px;
+      text-decoration: none;
+
+      &.active,
+      &:hover {
+        background-color: #ccc;
+      }
+    }
+  }
 }
