@@ -1,4 +1,5 @@
 import { Component } from '@angular/core'
+import { MainService } from './main.service'
 
 @Component({
   selector: 'app-main',
@@ -10,7 +11,10 @@ export class MainComponent {
   hotWater = 0
   electricity = 0
 
+  constructor(private _service: MainService) {
+  }
+
   countPrice() {
-    console.log(this.coldWater, this.hotWater, this.electricity)
+    this._service.countPrice(this.coldWater, this.hotWater, this.electricity)
   }
 }

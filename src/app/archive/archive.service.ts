@@ -22,12 +22,22 @@ export interface IArchiveEntry {
   total: number
 }
 
-@Injectable()
+@Injectable({
+  providedIn: 'root'
+})
 export class ArchiveService {
   constructor(private _http: HttpClient) {
   }
 
   getArchiveEntries() {
     return this._http.get('api/archive') as Observable<IArchiveEntry[]>
+  }
+
+  getLastArchiveEntry() {
+    return this._http.get('api/archive/last') as Observable<IArchiveEntry>
+  }
+
+  addArchiveEntry(newEntry: IArchiveEntry) {
+    return this._http.post('api/archive', newEntry)
   }
 }

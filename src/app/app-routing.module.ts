@@ -1,8 +1,8 @@
 import { NgModule } from '@angular/core'
 import { RouterModule, Routes } from '@angular/router'
-import { MainModule } from './main/main.module'
 
 const routes: Routes = [
+  { path: '', redirectTo: '/main', pathMatch: 'full' },
   {
     path: 'main',
     loadChildren: () => import('src/app/main/main.module').then(m => m.MainModule)
@@ -15,7 +15,7 @@ const routes: Routes = [
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
-  exports: [RouterModule, MainModule]
+  exports: [RouterModule]
 })
 export class AppRoutingModule {
 }
