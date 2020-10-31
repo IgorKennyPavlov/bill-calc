@@ -1,5 +1,5 @@
 import { Component } from '@angular/core'
-import { ArchiveService } from './archive.service'
+import { ArchiveService, IArchiveEntry } from './archive.service'
 
 @Component({
   selector: 'app-archive',
@@ -8,12 +8,10 @@ import { ArchiveService } from './archive.service'
 })
 export class ArchiveComponent {
 
-  archive: { [key: string]: any }[]
+  archiveEntries: IArchiveEntry[]
 
   constructor(private _service: ArchiveService) {
-    this._service.getArchive().subscribe(val => {
-      this.archive = val
-    })
+    this._service.getArchiveEntries().subscribe(entries => this.archiveEntries = entries)
   }
 
 }

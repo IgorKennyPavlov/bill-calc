@@ -1,6 +1,35 @@
-<div *ngFor="let recording of archive"
-     class="recording">
-  <p *ngFor="let entry of recording | keyvalue">
-    {{ entry.key }}: {{entry.value}}
-  </p>
+<div *ngFor="let entry of archiveEntries"
+     class="entry">
+  <h3 class="month">{{ entry.month }}</h3>
+  <div class="counters-data-wrap">
+    <div class="water-wrap">
+      <div class="counter-data cold-water">
+        <h4>Хол. вода</h4>
+        <p>Счётчик: {{ entry.coldWaterCounter }}</p>
+        <p>Расход: {{ entry.coldWaterUsed }} м<sup>3</sup></p>
+        <p>Стоимость: {{ entry.coldWaterCost }} за м<sup>3</sup></p>
+        <p>Итого: {{ entry.coldWaterTotal }} ₽</p>
+      </div>
+      <div class="counter-data hot-water">
+        <h4>Гор. вода</h4>
+        <p>Счётчик: {{ entry.hotWaterCounter }}</p>
+        <p>Расход: {{ entry.hotWaterUsed }} м<sup>3</sup></p>
+        <p>Стоимость: {{ entry.hotWaterCost }} за м<sup>3</sup></p>
+        <p>Итого: {{ entry.hotWaterTotal }} ₽</p>
+      </div>
+      <div class="utilization-data">
+        <h4>Водоотведение</h4>
+        <p>Стоимость: {{ entry.waterUtilizationCost }} за м<sup>3</sup></p>
+        <p>Итого: {{ entry.waterUtilizationTotal }} ₽</p>
+      </div>
+    </div>
+    <div class="counter-data electricity">
+      <h4>Эл. энергия</h4>
+      <p>Счётчик: {{ entry.electricityCounter }}</p>
+      <p>Расход: {{ entry.electricityUsed }} кВт/ч</p>
+      <p>Стоимость: {{ entry.electricityCost }} за кВт/ч</p>
+      <p>Итого: {{ entry.electricityTotal }} ₽</p>
+    </div>
+  </div>
+  <h4 class="total">Итого: {{ entry.total }} ₽</h4>
 </div>
