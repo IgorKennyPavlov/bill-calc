@@ -8,11 +8,11 @@ import { Component } from '@angular/core'
 export class AppComponent {
   navbarSchema = [
     {
-      title: 'загрузка фото',
+      title: 'Загрузка фото',
       link: '/main'
     },
     {
-      title: 'архив',
+      title: 'Архив',
       link: '/archive'
     }
   ]
