@@ -11,7 +11,9 @@ export class ArchiveComponent {
   archive: { [key: string]: any }[]
 
   constructor(private _service: ArchiveService) {
-    this.archive = this._service.getArchive()
+    this._service.getArchive().subscribe(val => {
+      this.archive = val
+    })
   }
 
 }
