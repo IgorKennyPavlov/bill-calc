@@ -52,4 +52,23 @@ export class AppService {
   async getEntries() {
     return await this._archiveEntryModel.find().exec() as IArchiveEntry[]
   }
+
+  async getLastEntry() {
+    return (await this._archiveEntryModel.find().sort({ _id: -1 }).limit(1))[0] as IArchiveEntry
+  }
+
+  addEntry(newEntry: IArchiveEntry) {
+    try {
+      new this._archiveEntryModel(newEntry).save()
+    } catch (err) {
+      console.log({ err })
+      return { status: 'failure' }
+    }
+    return { status: 'success' }
+  }
+
+  deleteEntry(id) {
+    // TODO добавить возможность удалять записи
+    console.log('deleted')
+  }
 }
