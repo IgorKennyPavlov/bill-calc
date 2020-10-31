@@ -8,7 +8,7 @@ import { Component } from '@angular/core'
 export class AppComponent {
   navbarSchema = [
     {
-      title: 'Загрузка фото',
+      title: 'Калькулятор',
       link: '/main'
     },
     {
