@@ -1,142 +1,55 @@
 import { Injectable } from '@nestjs/common'
+import { InjectModel } from '@nestjs/mongoose'
+import { Model, Schema } from 'mongoose'
+
+export const ArchiveEntrySchema = new Schema({
+  timestamp: { type: String, required: true },
+  month: { type: String, required: true },
+  coldWaterCounter: { type: Number, required: true },
+  coldWaterUsed: { type: Number, required: true },
+  coldWaterCost: { type: Number, required: true },
+  coldWaterTotal: { type: Number, required: true },
+  hotWaterCounter: { type: Number, required: true },
+  hotWaterUsed: { type: Number, required: true },
+  hotWaterCost: { type: Number, required: true },
+  hotWaterTotal: { type: Number, required: true },
+  waterUtilizationCost: { type: Number, required: true },
+  waterUtilizationTotal: { type: Number, required: true },
+  electricityCounter: { type: Number, required: true },
+  electricityUsed: { type: Number, required: true },
+  electricityCost: { type: Number, required: true },
+  electricityTotal: { type: Number, required: true },
+  total: { type: Number, required: true }
+})
+
+export interface IArchiveEntry {
+  timestamp: string,
+  month: string,
+  coldWaterCounter: number,
+  coldWaterUsed: number,
+  coldWaterCost: number,
+  coldWaterTotal: number,
+  hotWaterCounter: number,
+  hotWaterUsed: number,
+  hotWaterCost: number,
+  hotWaterTotal: number,
+  waterUtilizationCost: number,
+  waterUtilizationTotal: number,
+  electricityCounter: number,
+  electricityUsed: number,
+  electricityCost: number,
+  electricityTotal: number,
+  total: number
+}
 
 @Injectable()
 export class AppService {
-  getData() {
-    return [
-      {
-        timestamp: '2020-06-15T15:11:06.774Z',
-        month: 'март 2020',
-        coldWaterCounter: 296,
-        coldWaterUsed: 6,
-        coldWaterCost: 22.9,
-        coldWaterTotal: 137.39,
-        hotWaterCounter: 160,
-        hotWaterUsed: 4,
-        hotWaterCost: 186.23,
-        hotWaterTotal: 744.92,
-        waterUtilizationCost: 28.21,
-        waterUtilizationTotal: 282.1,
-        electricityCounter: 13836,
-        electricityUsed: 149,
-        electricityCost: 3.89,
-        electricityTotal: 579.61,
-        total: 1744.02
-      },
-      {
-        timestamp: '2020-06-15T15:15:34.537Z',
-        month: 'апрель 2020',
-        coldWaterCounter: 303,
-        coldWaterUsed: 7,
-        coldWaterCost: 22.9,
-        coldWaterTotal: 160.29,
-        hotWaterCounter: 164,
-        hotWaterUsed: 4,
-        hotWaterCost: 186.23,
-        hotWaterTotal: 744.92,
-        waterUtilizationCost: 28.21,
-        waterUtilizationTotal: 310.31,
-        electricityCounter: 13982,
-        electricityUsed: 146,
-        electricityCost: 3.89,
-        electricityTotal: 567.94,
-        total: 1783.46
-      },
-      {
-        timestamp: '2020-06-15T15:16:57.991Z',
-        month: 'май 2020',
-        coldWaterCounter: 310,
-        coldWaterUsed: 7,
-        coldWaterCost: 22.9,
-        coldWaterTotal: 160.29,
-        hotWaterCounter: 168,
-        hotWaterUsed: 4,
-        hotWaterCost: 186.23,
-        hotWaterTotal: 744.92,
-        waterUtilizationCost: 28.21,
-        waterUtilizationTotal: 310.31,
-        electricityCounter: 14129,
-        electricityUsed: 147,
-        electricityCost: 3.89,
-        electricityTotal: 571.83,
-        total: 1787.35
-      },
-      {
-        timestamp: '2020-07-14T14:01:03.216Z',
-        month: 'июнь 2020',
-        coldWaterCounter: 317,
-        coldWaterUsed: 7,
-        coldWaterCost: 22.9,
-        coldWaterTotal: 160.29,
-        hotWaterCounter: 171,
-        hotWaterUsed: 3,
-        hotWaterCost: 186.23,
-        hotWaterTotal: 558.68,
-        waterUtilizationCost: 28.21,
-        waterUtilizationTotal: 282.1,
-        electricityCounter: 14270,
-        electricityUsed: 141,
-        electricityCost: 3.89,
-        electricityTotal: 548.49,
-        total: 1549.56
-      },
-      {
-        timestamp: '2020-08-15T12:27:49.402Z',
-        month: 'июль 2020',
-        coldWaterCounter: 324,
-        coldWaterUsed: 7,
-        coldWaterCost: 23.9,
-        coldWaterTotal: 167.3,
-        hotWaterCounter: 175,
-        hotWaterUsed: 4,
-        hotWaterCost: 189.42,
-        hotWaterTotal: 757.68,
-        waterUtilizationCost: 29.09,
-        waterUtilizationTotal: 319.99,
-        electricityCounter: 14406,
-        electricityUsed: 136,
-        electricityCost: 4.01,
-        electricityTotal: 545.36,
-        total: 1790.33
-      },
-      {
-        timestamp: '2020-09-15T13:30:42.306Z',
-        month: 'август 2020',
-        coldWaterCounter: 330,
-        coldWaterUsed: 6,
-        coldWaterCost: 23.9,
-        coldWaterTotal: 143.39,
-        hotWaterCounter: 180,
-        hotWaterUsed: 5,
-        hotWaterCost: 189.42,
-        hotWaterTotal: 947.09,
-        waterUtilizationCost: 29.09,
-        waterUtilizationTotal: 319.99,
-        electricityCounter: 14530,
-        electricityUsed: 124,
-        electricityCost: 4.01,
-        electricityTotal: 497.23,
-        total: 1907.7
-      },
-      {
-        timestamp: '2020-10-12T21:08:17.646Z',
-        month: 'сентябрь 2020',
-        coldWaterCounter: 335,
-        coldWaterUsed: 5,
-        coldWaterCost: 23.9,
-        coldWaterTotal: 119.5,
-        hotWaterCounter: 182,
-        hotWaterUsed: 2,
-        hotWaterCost: 189.42,
-        hotWaterTotal: 378.84,
-        waterUtilizationCost: 29.09,
-        waterUtilizationTotal: 203.63,
-        electricityCounter: 14624,
-        electricityUsed: 94,
-        electricityCost: 4.01,
-        electricityTotal: 376.94,
-        total: 1078.91
-      }
-    ]
+  constructor(
+    @InjectModel('ArchiveEntry') private _archiveEntryModel: Model<IArchiveEntry>
+  ) {
+  }
+
+  async getEntries() {
+    return await this._archiveEntryModel.find().exec() as IArchiveEntry[]
   }
 }
