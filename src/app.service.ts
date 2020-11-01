@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common'
 import { InjectModel } from '@nestjs/mongoose'
-import { Model, Schema } from 'mongoose'
+import { Document, Model, Schema } from 'mongoose'
 
 export const ArchiveEntrySchema = new Schema({
   timestamp: { type: String, required: true },
@@ -22,7 +22,7 @@ export const ArchiveEntrySchema = new Schema({
   total: { type: Number, required: true }
 })
 
-export interface IArchiveEntry {
+export interface IArchiveEntry extends Document {
   timestamp: string,
   month: string,
   coldWaterCounter: number,
@@ -50,11 +50,11 @@ export class AppService {
   }
 
   async getEntries() {
-    return await this._archiveEntryModel.find().exec() as IArchiveEntry[]
+    return await this._archiveEntryModel.find().exec()
   }
 
   async getLastEntry() {
-    return (await this._archiveEntryModel.find().sort({ _id: -1 }).limit(1))[0] as IArchiveEntry
+    return (await this._archiveEntryModel.find().sort({ _id: -1 }).limit(1).exec())[0]
   }
 
   addEntry(newEntry: IArchiveEntry) {
@@ -65,10 +65,5 @@ export class AppService {
       return { status: 'failure' }
     }
     return { status: 'success' }
-  }
-
-  deleteEntry(id) {
-    // TODO добавить возможность удалять записи
-    console.log('deleted')
   }
 }
