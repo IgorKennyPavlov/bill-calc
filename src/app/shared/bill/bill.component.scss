@@ -1,0 +1,49 @@
+:host {
+  display: block;
+  padding: 12px 40px;
+  transition: box-shadow .3s, transform .3s;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  box-shadow: 5px 5px 10px;
+
+  .month {
+    margin-bottom: 0;
+    text-transform: capitalize;
+  }
+
+  &:hover {
+    transform: scale(1.005);
+    box-shadow: 10px 10px 15px;
+  }
+
+  .month {
+    text-align: center;
+  }
+
+  .counters-data-wrap {
+    display: flex;
+    justify-content: space-between;
+  }
+
+  .water-wrap {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+
+    .counter-data {
+      flex-basis: 50%;
+    }
+
+    .utilization-data {
+      flex-basis: 100%;
+    }
+  }
+
+  .counter-data.electricity {
+    flex-basis: 35%;
+  }
+
+  .total {
+    text-transform: uppercase;
+  }
+}
