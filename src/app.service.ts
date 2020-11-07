@@ -2,7 +2,7 @@ import { Injectable } from '@nestjs/common'
 import { InjectModel } from '@nestjs/mongoose'
 import { Document, Model, Schema } from 'mongoose'
 
-export const ArchiveEntrySchema = new Schema({
+export const ArchivedBillSchema = new Schema({
   timestamp: { type: String, required: true },
   month: { type: String, required: true },
   coldWaterCounter: { type: Number, required: true },
@@ -22,7 +22,7 @@ export const ArchiveEntrySchema = new Schema({
   total: { type: Number, required: true }
 })
 
-export interface IArchiveEntry extends Document {
+export interface IBill extends Document {
   timestamp: string,
   month: string,
   coldWaterCounter: number,
@@ -45,21 +45,21 @@ export interface IArchiveEntry extends Document {
 @Injectable()
 export class AppService {
   constructor(
-    @InjectModel('ArchiveEntry') private _archiveEntryModel: Model<IArchiveEntry>
+    @InjectModel('ArchivedBill') private _archivedBillModel: Model<IBill>
   ) {
   }
 
-  async getEntries() {
-    return await this._archiveEntryModel.find().exec()
+  async getAllBills() {
+    return await this._archivedBillModel.find().exec()
   }
 
-  async getLastEntry() {
-    return (await this._archiveEntryModel.find().sort({ _id: -1 }).limit(1).exec())[0]
+  async getLastBill() {
+    return (await this._archivedBillModel.find().sort({ _id: -1 }).limit(1).exec())[0]
   }
 
-  addEntry(newEntry: IArchiveEntry) {
+  addNewBill(newBill: IBill) {
     try {
-      new this._archiveEntryModel(newEntry).save()
+      new this._archivedBillModel(newBill).save()
     } catch (err) {
       console.log({ err })
       return { status: 'failure' }

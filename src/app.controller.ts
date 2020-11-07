@@ -1,5 +1,5 @@
 import { Body, Controller, Get, Post } from '@nestjs/common'
-import { AppService, IArchiveEntry } from './app.service'
+import { AppService, IBill } from './app.service'
 
 @Controller('api/archive')
 export class AppController {
@@ -7,17 +7,17 @@ export class AppController {
   }
 
   @Get()
-  async getEntries() {
-    return await this.appService.getEntries()
+  async getAllBills() {
+    return await this.appService.getAllBills()
   }
 
   @Get('last')
-  async getLastEntry() {
-    return await this.appService.getLastEntry()
+  async getLastBill() {
+    return await this.appService.getLastBill()
   }
 
   @Post()
-  async addEntry(@Body() newEntry: IArchiveEntry) {
-    return this.appService.addEntry(newEntry)
+  async addNewBill(@Body() newBill: IBill) {
+    return this.appService.addNewBill(newBill)
   }
 }
