@@ -28,7 +28,7 @@ export class MainService {
   newBill: IBill = null
 
   constructor(private _archiveService: ArchiveService) {
-    _archiveService.getLastArchiveBill()
+    _archiveService.getLastArchivedBill()
       .subscribe(lastBill => this._lastBill = lastBill)
   }
 

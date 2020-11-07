@@ -10,11 +10,11 @@ export class ArchiveService {
   constructor(private _http: HttpClient) {
   }
 
-  getAllArchiveBills() {
+  getAllArchivedBills() {
     return this._http.get('api/archive') as Observable<IBill[]>
   }
 
-  getLastArchiveBill() {
+  getLastArchivedBill() {
     return this._http.get('api/archive/last') as Observable<IBill>
   }
 

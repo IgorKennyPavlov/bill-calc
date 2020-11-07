@@ -14,7 +14,7 @@ export class ArchiveComponent implements OnDestroy {
   archiveBills: IBill[]
 
   constructor(private _service: ArchiveService) {
-    this._subscriptions.push(this._service.getAllArchiveBills().subscribe(entries => this.archiveBills = entries))
+    this._subscriptions.push(this._service.getAllArchivedBills().subscribe(entries => this.archiveBills = entries))
   }
 
   ngOnDestroy() {
