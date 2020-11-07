@@ -16,6 +16,7 @@
   </div>
 </div>
 
+<!--TODO поправить стили превью -->
 <app-bill *ngIf="newBill"
           [billData]="newBill">
 </app-bill>
@@ -23,16 +24,22 @@
 <div class="btn-panel">
   <button *ngIf="!newBill; else newBillActions"
           class="btn"
+          color="primary"
+          mat-raised-button
           (click)="calculateBill()">
     Посчитать стоимость
   </button>
 
   <ng-template #newBillActions>
     <button class="btn"
+            color="warn"
+            mat-raised-button
             (click)="clearNewBill()">
       Отменить
     </button>
     <button class="btn"
+            color="accent"
+            mat-raised-button
             (click)="saveNewBill()">
       Сохранить
     </button>

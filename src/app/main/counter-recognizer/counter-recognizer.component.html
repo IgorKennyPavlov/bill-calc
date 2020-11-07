@@ -1,16 +1,18 @@
-<canvas #preview
-        class="preview-canvas">
+<canvas class="preview-canvas"
+        #preview>
 </canvas>
 
 <button class="btn"
+        color="accent"
+        mat-raised-button
         (click)="photos.click()">
   Загрузить фото
 </button>
 
 <input #photos
-       type="file"
-       name="counters"
        id="counters"
+       name="counters"
+       type="file"
        (change)="onLoad($event)">
 
 <h4 *ngIf="workerInfo; else ocrResultTpl"
@@ -19,7 +21,13 @@
 </h4>
 
 <ng-template #ocrResultTpl>
-  <input class="recognized-text"
-         type="text"
-         [formControl]="recognizedText">
+  <div class="recognized-text">
+    <mat-form-field appearance="fill">
+      <input matInput
+             [formControl]="recognizedText">
+      <mat-error *ngIf="recognizedText.invalid">
+        {{getErrorMessage(recognizedText.errors)}}
+      </mat-error>
+    </mat-form-field>
+  </div>
 </ng-template>

@@ -1,6 +1,6 @@
 import { Component, ElementRef, EventEmitter, Input, OnDestroy, Output, ViewChild } from '@angular/core'
 import { createWorker } from 'tesseract.js'
-import { FormControl, Validators } from '@angular/forms'
+import { FormControl, ValidationErrors, Validators } from '@angular/forms'
 import { Subscription } from 'rxjs'
 
 @Component({
@@ -78,5 +78,11 @@ export class CounterRecognizerComponent implements OnDestroy {
     this.workerInfo = null
     await worker.terminate()
     return text
+  }
+
+  getErrorMessage(errors: ValidationErrors): string {
+    // TODO добавить возврат сообщений об ошибке
+    console.log({ errors })
+    return ''
   }
 }

@@ -4,7 +4,10 @@
   margin: 20px;
 }
 
-app-bill {
-  flex-basis: 42%;
-  margin: 20px;
+mat-accordion {
+  width: 100%;
+
+  mat-panel-title {
+    text-transform: capitalize;
+  }
 }

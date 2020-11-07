@@ -3,7 +3,7 @@
   align-items: center;
   flex-direction: column;
   justify-content: center;
-  margin-bottom: 80px;
+  margin: 80px auto;
 }
 
 .counter-recognizers {
@@ -16,7 +16,7 @@
   text-align: center;
 
   &.cold-water {
-    color: blue;
+    color: lightblue;
   }
 
   &.hot-water {
@@ -32,7 +32,7 @@
   display: flex;
   justify-content: center;
   width: 100%;
-  margin-top: 80px;
+  margin-top: 20px;
 
   .btn {
     margin: 0 20px;

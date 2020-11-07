@@ -1,32 +1,29 @@
-<h3 class="month">{{ billData.month }}</h3>
 <div class="counters-data-wrap">
-  <div class="water-wrap">
-    <div class="counter-data cold-water">
-      <h4>Хол. вода</h4>
-      <p>Счётчик: {{ billData.coldWaterCounter }}</p>
-      <p>Расход: {{ billData.coldWaterUsed }} м<sup>3</sup></p>
-      <p>Стоимость: {{ billData.coldWaterCost }} за м<sup>3</sup></p>
-      <p>Итого: {{ billData.coldWaterTotal }} ₽</p>
-    </div>
-    <div class="counter-data hot-water">
-      <h4>Гор. вода</h4>
-      <p>Счётчик: {{ billData.hotWaterCounter }}</p>
-      <p>Расход: {{ billData.hotWaterUsed }} м<sup>3</sup></p>
-      <p>Стоимость: {{ billData.hotWaterCost }} за м<sup>3</sup></p>
-      <p>Итого: {{ billData.hotWaterTotal }} ₽</p>
-    </div>
-    <div class="utilization-data">
-      <h4>Водоотведение</h4>
-      <p>Стоимость: {{ billData.waterUtilizationCost }} за м<sup>3</sup></p>
-      <p>Итого: {{ billData.waterUtilizationTotal }} ₽</p>
-    </div>
+  <div class="counter-data cold-water">
+    <h3>Хол. вода</h3>
+    <p>Счётчик: {{ billData.coldWaterCounter }}</p>
+    <p>Расход: {{ billData.coldWaterUsed }} м<sup>3</sup></p>
+    <p>Стоимость: {{ billData.coldWaterCost }} за м<sup>3</sup></p>
+    <p>Итого: {{ billData.coldWaterTotal }} ₽</p>
+  </div>
+  <div class="counter-data hot-water">
+    <h3>Гор. вода</h3>
+    <p>Счётчик: {{ billData.hotWaterCounter }}</p>
+    <p>Расход: {{ billData.hotWaterUsed }} м<sup>3</sup></p>
+    <p>Стоимость: {{ billData.hotWaterCost }} за м<sup>3</sup></p>
+    <p>Итого: {{ billData.hotWaterTotal }} ₽</p>
+  </div>
+  <div class="counter-data utilization-data">
+    <h3>Водоотведение</h3>
+    <p>Стоимость: {{ billData.waterUtilizationCost }} за м<sup>3</sup></p>
+    <p>Итого: {{ billData.waterUtilizationTotal }} ₽</p>
   </div>
   <div class="counter-data electricity">
-    <h4>Эл. энергия</h4>
+    <h3>Эл. энергия</h3>
     <p>Счётчик: {{ billData.electricityCounter }}</p>
     <p>Расход: {{ billData.electricityUsed }} кВт/ч</p>
     <p>Стоимость: {{ billData.electricityCost }} за кВт/ч</p>
     <p>Итого: {{ billData.electricityTotal }} ₽</p>
   </div>
 </div>
-<h4 class="total">Итого: {{ billData.total }} ₽</h4>
+<h3 class="total">Итого: {{ billData.total }} ₽</h3>

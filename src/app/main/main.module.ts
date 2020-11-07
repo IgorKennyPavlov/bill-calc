@@ -4,6 +4,10 @@ import { RouterModule } from '@angular/router'
 import { ReactiveFormsModule } from '@angular/forms'
 import { HttpClientModule } from '@angular/common/http'
 
+import { MatButtonModule } from '@angular/material/button'
+import { MatFormFieldModule } from '@angular/material/form-field'
+import { MatInputModule } from '@angular/material/input'
+
 import { MainComponent } from './main.component'
 import { CounterRecognizerComponent } from './counter-recognizer/counter-recognizer.component'
 import { MainService } from './main.service'
@@ -21,7 +25,10 @@ import { SharedModule } from '../shared/shared.module'
     ]),
     ReactiveFormsModule,
     HttpClientModule,
-    SharedModule
+    SharedModule,
+    MatButtonModule,
+    MatFormFieldModule,
+    MatInputModule
   ],
   providers: [MainService],
   declarations: [MainComponent, CounterRecognizerComponent]
