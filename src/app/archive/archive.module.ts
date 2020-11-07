@@ -4,6 +4,7 @@ import { RouterModule } from '@angular/router'
 import { ReactiveFormsModule } from '@angular/forms'
 
 import { ArchiveComponent } from './archive.component'
+import { SharedModule } from '../shared/shared.module'
 
 @NgModule({
   imports: [
@@ -16,6 +17,7 @@ import { ArchiveComponent } from './archive.component'
       }
     ]),
     ReactiveFormsModule,
+    SharedModule
   ],
   declarations: [ArchiveComponent]
 })

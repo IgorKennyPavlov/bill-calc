@@ -1,5 +1,6 @@
 import { Component } from '@angular/core'
 import { MainService } from './main.service'
+import { IBill } from '../shared/bill/bill.component'
 
 @Component({
   selector: 'app-main',
@@ -11,10 +12,22 @@ export class MainComponent {
   hotWater = 0
   electricity = 0
 
+  get newBill(): IBill {
+    return this._service.newBill
+  }
+
   constructor(private _service: MainService) {
   }
 
-  countPrice() {
-    this._service.countPrice(this.coldWater, this.hotWater, this.electricity)
+  calculateBill() {
+    this._service.calculateBill(this.coldWater, this.hotWater, this.electricity)
+  }
+
+  saveNewBill() {
+    this._service.saveNewBill()
+  }
+
+  clearNewBill() {
+    this._service.clearNewBill()
   }
 }

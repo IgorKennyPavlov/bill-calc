@@ -1,7 +1,7 @@
 import { Component, OnDestroy } from '@angular/core'
 import { Subscription } from 'rxjs'
-
-import { ArchiveService, IArchiveEntry } from './archive.service'
+import { ArchiveService } from './archive.service'
+import { IBill } from '../shared/bill/bill.component'
 
 @Component({
   selector: 'app-archive',
@@ -11,10 +11,10 @@ import { ArchiveService, IArchiveEntry } from './archive.service'
 export class ArchiveComponent implements OnDestroy {
   private _subscriptions: Subscription[] = []
 
-  archiveEntries: IArchiveEntry[]
+  archiveBills: IBill[]
 
   constructor(private _service: ArchiveService) {
-    this._subscriptions.push(this._service.getArchiveEntries().subscribe(entries => this.archiveEntries = entries))
+    this._subscriptions.push(this._service.getAllArchiveBills().subscribe(entries => this.archiveBills = entries))
   }
 
   ngOnDestroy() {

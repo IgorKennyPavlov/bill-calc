@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core'
 import { ArchiveService } from '../archive/archive.service'
+import { IBill } from '../shared/bill/bill.component'
 
 const RUSSIAN_MONTHS = [
   'январь',
@@ -23,20 +24,16 @@ const electricityCost = 4.01
 
 @Injectable()
 export class MainService {
-  private _oldColdWaterCounter: number
-  private _oldHotWaterCounter: number
-  private _oldElectricityCounter: number
+  private _lastBill: IBill
+  newBill: IBill = null
 
   constructor(private _archiveService: ArchiveService) {
-    _archiveService.getLastArchiveEntry()
-      .subscribe(lastEntry => {
-        this._oldColdWaterCounter = lastEntry.coldWaterCounter
-        this._oldHotWaterCounter = lastEntry.hotWaterCounter
-        this._oldElectricityCounter = lastEntry.electricityCounter
-      })
+    _archiveService.getLastArchiveBill()
+      .subscribe(lastBill => this._lastBill = lastBill)
   }
 
-  countPrice(coldWaterCounter, hotWaterCounter, electricityCounter) {
+  calculateBill(coldWaterCounter: number, hotWaterCounter: number, electricityCounter: number) {
+    // TODO Заменить выброс ошибок нормальными уведомлениями
     if (!coldWaterCounter) {
       throw Error('No cold water expense data entered!')
     }
@@ -49,7 +46,13 @@ export class MainService {
       throw Error('No electricity expense data entered!')
     }
 
-    if (!(this._oldColdWaterCounter && this._oldHotWaterCounter && this._oldElectricityCounter)) {
+    const {
+      coldWaterCounter: oldColdWaterCounter,
+      hotWaterCounter: oldHotWaterCounter,
+      electricityCounter: oldElectricityCounter
+    } = this._lastBill
+
+    if (!(oldColdWaterCounter && oldHotWaterCounter && oldElectricityCounter)) {
       throw Error('Could not retrieve old counter data!')
     }
 
@@ -57,9 +60,9 @@ export class MainService {
     const month = RUSSIAN_MONTHS[(now.getMonth() || 12) - 1]
     const year = now.getFullYear()
 
-    const coldWaterUsed = coldWaterCounter - this._oldColdWaterCounter
-    const hotWaterUsed = hotWaterCounter - this._oldHotWaterCounter
-    const electricityUsed = electricityCounter - this._oldElectricityCounter
+    const coldWaterUsed = coldWaterCounter - oldColdWaterCounter
+    const hotWaterUsed = hotWaterCounter - oldHotWaterCounter
+    const electricityUsed = electricityCounter - oldElectricityCounter
 
     const coldWaterTotal = ~~(coldWaterUsed * coldWaterCost * 100) / 100
     const hotWaterTotal = ~~(hotWaterUsed * hotWaterCost * 100) / 100
@@ -68,9 +71,7 @@ export class MainService {
 
     const total = ~~((coldWaterTotal + hotWaterTotal + waterUtilizationTotal + electricityTotal) * 100) / 100
 
-    // TODO Разделить методы на Посчитать и Сохранить.
-    //  Добавить обратную связь после сохранения(вывести новую запись, либо показать сообщение об ошибке)
-    this._archiveService.addArchiveEntry({
+    this.newBill = {
       timestamp: now.toISOString(),
       month: month + ' ' + year,
 
@@ -93,7 +94,13 @@ export class MainService {
       electricityTotal,
 
       total
-    })
+    }
+
+  }
+
+  saveNewBill() {
+    // TODO Добавить обратную связь после сохранения (вывести новую запись, либо показать сообщение об ошибке)
+    this._archiveService.saveBill(this.newBill)
       .subscribe((res: { status: 'success' | 'failure' }) => {
         if (res.status === 'success') {
           console.log({ res })
@@ -102,9 +109,15 @@ export class MainService {
           // console.table({ waterUtilizationTotal })
           // console.table({ electricityUsed, electricityTotal })
           // console.table({ total })
+
+          this.clearNewBill()
         } else {
           console.log({ res })
         }
       })
+  }
+
+  clearNewBill() {
+    this.newBill = null
   }
 }

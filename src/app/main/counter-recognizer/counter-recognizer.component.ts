@@ -1,6 +1,6 @@
 import { Component, ElementRef, EventEmitter, Input, OnDestroy, Output, ViewChild } from '@angular/core'
 import { createWorker } from 'tesseract.js'
-import { FormControl } from '@angular/forms'
+import { FormControl, Validators } from '@angular/forms'
 import { Subscription } from 'rxjs'
 
 @Component({
@@ -18,7 +18,7 @@ export class CounterRecognizerComponent implements OnDestroy {
 
   workerInfo: any = null
 
-  recognizedText = new FormControl('00000')
+  recognizedText = new FormControl('00000', [Validators.required])
   subscription: Subscription
 
   get loadingProgress(): string {

@@ -7,6 +7,7 @@ import { HttpClientModule } from '@angular/common/http'
 import { MainComponent } from './main.component'
 import { CounterRecognizerComponent } from './counter-recognizer/counter-recognizer.component'
 import { MainService } from './main.service'
+import { SharedModule } from '../shared/shared.module'
 
 @NgModule({
   imports: [
@@ -19,7 +20,8 @@ import { MainService } from './main.service'
       }
     ]),
     ReactiveFormsModule,
-    HttpClientModule
+    HttpClientModule,
+    SharedModule
   ],
   providers: [MainService],
   declarations: [MainComponent, CounterRecognizerComponent]

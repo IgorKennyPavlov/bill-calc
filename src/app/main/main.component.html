@@ -16,7 +16,26 @@
   </div>
 </div>
 
-<button class="btn"
-        (click)="countPrice()">
-  Посчитать стоимость
-</button>
+<app-bill *ngIf="newBill"
+          [billData]="newBill">
+</app-bill>
+
+<div class="btn-panel">
+  <button *ngIf="!newBill; else newBillActions"
+          class="btn"
+          (click)="calculateBill()">
+    Посчитать стоимость
+  </button>
+
+  <ng-template #newBillActions>
+    <button class="btn"
+            (click)="clearNewBill()">
+      Отменить
+    </button>
+    <button class="btn"
+            (click)="saveNewBill()">
+      Сохранить
+    </button>
+  </ng-template>
+</div>
+
