@@ -9,15 +9,15 @@ import { IBill } from '../shared/bill/bill.component'
   styleUrls: ['./archive.component.scss']
 })
 export class ArchiveComponent implements OnDestroy {
-  private _subscriptions: Subscription[] = []
+  private _subs: Subscription[] = []
 
   archiveBills: IBill[]
 
   constructor(private _service: ArchiveService) {
-    this._subscriptions.push(this._service.getAllArchivedBills().subscribe(entries => this.archiveBills = entries))
+    this._subs.push(this._service.getAllArchivedBills().subscribe(entries => this.archiveBills = entries))
   }
 
   ngOnDestroy() {
-    this._subscriptions.forEach(subscription => subscription.unsubscribe())
+    this._subs.forEach(sub => sub.unsubscribe())
   }
 }

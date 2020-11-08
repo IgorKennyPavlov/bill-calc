@@ -20,9 +20,7 @@ input#counters {
 }
 
 .loading-progress {
+  min-height: 28px;
+  margin: 12px auto;
   text-transform: capitalize;
-}
-
-.recognized-text {
-  margin: 20px 0;
 }

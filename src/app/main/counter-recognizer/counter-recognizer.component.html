@@ -15,19 +15,7 @@
        type="file"
        (change)="onLoad($event)">
 
-<h4 *ngIf="workerInfo; else ocrResultTpl"
+<h4 [style.visibility]="workerInfo ? 'visible' : 'hidden'"
     class="loading-progress">
-  {{loadingProgress}}
+  {{ loadingProgress }}
 </h4>
-
-<ng-template #ocrResultTpl>
-  <div class="recognized-text">
-    <mat-form-field appearance="fill">
-      <input matInput
-             [formControl]="recognizedText">
-      <mat-error *ngIf="recognizedText.invalid">
-        {{getErrorMessage(recognizedText.errors)}}
-      </mat-error>
-    </mat-form-field>
-  </div>
-</ng-template>

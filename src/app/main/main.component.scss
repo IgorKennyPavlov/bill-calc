@@ -12,19 +12,37 @@
   width: 100%;
 }
 
-.cr-wrapper .title {
-  text-align: center;
+.cr-wrapper {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
 
-  &.cold-water {
-    color: lightblue;
+  .title {
+    text-align: center;
+
+    &.cold-water {
+      color: lightblue;
+    }
+
+    &.hot-water {
+      color: red;
+    }
+
+    &.electricity {
+      color: orange;
+    }
   }
+}
 
-  &.hot-water {
-    color: red;
-  }
+.recognized-text {
+  margin: 20px 0;
+}
 
-  &.electricity {
-    color: orange;
+app-bill {
+  width: 90%;
+  padding: 20px;
+  border: 1px solid #ccc {
+    radius: 5px;
   }
 }
 

@@ -1,37 +1,24 @@
-import { Component, ElementRef, EventEmitter, Input, OnDestroy, Output, ViewChild } from '@angular/core'
+import { Component, ElementRef, EventEmitter, Input, Output, ViewChild } from '@angular/core'
 import { createWorker } from 'tesseract.js'
-import { FormControl, ValidationErrors, Validators } from '@angular/forms'
-import { Subscription } from 'rxjs'
 
 @Component({
   selector: 'app-counter-recognizer',
   templateUrl: './counter-recognizer.component.html',
   styleUrls: ['./counter-recognizer.component.scss']
 })
-export class CounterRecognizerComponent implements OnDestroy {
+export class CounterRecognizerComponent {
   @ViewChild('preview', { read: ElementRef }) previewCanvasRef: ElementRef<HTMLCanvasElement>
 
-  @Input() brightness = '2.4'
-  @Input() contrast = '10'
+  @Input() brightness = 2.4
+  @Input() contrast = 10
 
   @Output() ocrComplete = new EventEmitter<string>()
 
   workerInfo: any = null
 
-  recognizedText = new FormControl('00000', [Validators.required])
-  subscription: Subscription
-
   get loadingProgress(): string {
     const w = this.workerInfo
-    return `${w.status}: ${~~w.progress * 100}%`
-  }
-
-  constructor() {
-    this.subscription = this.recognizedText.valueChanges.subscribe(newVal => this.ocrComplete.emit(newVal))
-  }
-
-  ngOnDestroy() {
-    this.subscription.unsubscribe()
+    return w ? `${ w.status }: ${ ~~w.progress * 100 }%` : ''
   }
 
   async onLoad(e: Event) {
@@ -42,14 +29,12 @@ export class CounterRecognizerComponent implements OnDestroy {
       return
     }
 
-    this.recognizedText.reset('00000')
-
     // Создаём виртуальный канвас
     const canvas = document.createElement('canvas')
     const ctx = canvas.getContext('2d')
     const file = files[0]
-
     const img = new Image()
+
     img.addEventListener('load', async () => {
       // Рисуем превью
       this.previewCanvasRef.nativeElement
@@ -57,19 +42,17 @@ export class CounterRecognizerComponent implements OnDestroy {
         .drawImage(img, 0, 0, img.width, img.height, 0, 0, canvas.width, canvas.height)
 
       // Фильтруем фотку в виртуальном канвасе
-      ctx.filter = `grayscale(100%) brightness(${this.brightness}) contrast(${this.contrast})`
+      ctx.filter = `grayscale(100%) brightness(${ this.brightness || 2.4 }) contrast(${ this.contrast || 10 })`
       ctx.drawImage(img, 0, 0, img.width, img.height, 0, 0, canvas.width, canvas.height)
 
       // Распознаём, отрезаем до запятой, запоминаем
-      this.recognizedText.setValue((await this._ocrImg(canvas.toDataURL())).slice(0, 5))
+      this.ocrComplete.emit((await this._ocrImg(canvas.toDataURL())).slice(0, 5))
     })
     img.src = URL.createObjectURL(file)
   }
 
   private async _ocrImg(file: string) {
-    const worker = createWorker({
-      logger: workerInfo => this.workerInfo = workerInfo
-    })
+    const worker = createWorker({ logger: workerInfo => this.workerInfo = workerInfo })
     await worker.load()
     await worker.loadLanguage('eng')
     await worker.initialize('eng')
@@ -78,11 +61,5 @@ export class CounterRecognizerComponent implements OnDestroy {
     this.workerInfo = null
     await worker.terminate()
     return text
-  }
-
-  getErrorMessage(errors: ValidationErrors): string {
-    // TODO добавить возврат сообщений об ошибке
-    console.log({ errors })
-    return ''
   }
 }

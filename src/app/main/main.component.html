@@ -1,22 +1,24 @@
 <div class="counter-recognizers">
-  <div class="cr-wrapper">
-    <h2 class="title cold-water">Холодная вода</h2>
-    <app-counter-recognizer (ocrComplete)="coldWater = +$event"></app-counter-recognizer>
-  </div>
-  <div class="cr-wrapper">
-    <h2 class="title hot-water">Горячая вода</h2>
-    <app-counter-recognizer (ocrComplete)="hotWater = +$event"></app-counter-recognizer>
-  </div>
-  <div class="cr-wrapper">
-    <h2 class="title electricity">Эл. энергия</h2>
-    <app-counter-recognizer brightness='1.4'
-                            contrast="30"
-                            (ocrComplete)="electricity = +$event">
+  <div *ngFor="let counter of countersSchema"
+       class="cr-wrapper">
+    <h2 class="title"
+        [ngClass]="counter.titleClass">
+      {{ counter.title }}
+    </h2>
+    <app-counter-recognizer [brightness]="counter.brightness"
+                            [contrast]="counter.contrast"
+                            (ocrComplete)="updateControl(counter.ctrl, $event)">
     </app-counter-recognizer>
+    <div class="recognized-text">
+      <mat-form-field appearance="fill">
+        <input matInput
+               [formControl]="counter.ctrl">
+        <mat-error>{{getErrorMessage(counter.ctrl)}}</mat-error>
+      </mat-form-field>
+    </div>
   </div>
 </div>
 
-<!--TODO поправить стили превью -->
 <app-bill *ngIf="newBill"
           [billData]="newBill">
 </app-bill>
@@ -26,6 +28,7 @@
           class="btn"
           color="primary"
           mat-raised-button
+          [disabled]="someCountersInvalid"
           (click)="calculateBill()">
     Посчитать стоимость
   </button>
