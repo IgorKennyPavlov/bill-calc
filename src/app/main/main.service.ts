@@ -23,6 +23,7 @@ const hotWaterCost = ~~((24.79 + 164.64) * 100) / 100 // Носитель + эн
 const waterUtilizationCost = 29.09
 const electricityCost = 4.01
 
+// TODO Отрефакторить всплывашки. Стилизовать под успех/ошибку
 @Injectable()
 export class MainService {
   private _lastBill: IBill
@@ -34,17 +35,9 @@ export class MainService {
   }
 
   calculateBill(coldWaterCounter: number, hotWaterCounter: number, electricityCounter: number) {
-    // TODO Заменить выброс ошибок нормальными уведомлениями
-    if (!coldWaterCounter) {
-      throw Error('No cold water expense data entered!')
-    }
-
-    if (!hotWaterCounter) {
-      throw Error('No hot water expense data entered!')
-    }
-
-    if (!electricityCounter) {
-      throw Error('No electricity expense data entered!')
+    if (!(coldWaterCounter && hotWaterCounter && electricityCounter)) {
+      this._snackBar.open('Ошибка в новых данных. Повторите попытку.', 'Закрыть', { duration: 2200 })
+      return
     }
 
     const {
@@ -54,7 +47,8 @@ export class MainService {
     } = this._lastBill
 
     if (!(oldColdWaterCounter && oldHotWaterCounter && oldElectricityCounter)) {
-      throw Error('Could not retrieve old counter data!')
+      this._snackBar.open('Ошибка в старых данных. Повторите попытку.', 'Закрыть', { duration: 2200 })
+      return
     }
 
     const now = new Date(Date.now())
@@ -100,7 +94,6 @@ export class MainService {
   }
 
   saveNewBill() {
-    // TODO Стилизовать всплывающие подсказки (успех, ошибка)
     this._archiveService.saveBill(this.newBill)
       .subscribe(
         res => {
@@ -112,7 +105,7 @@ export class MainService {
           this.clearNewBill()
         },
         err => {
-          this._snackBar.open('Произошла ошибка. Попробуйте ещё.', 'Закрыть', { duration: 2200 })
+          this._snackBar.open('Произошла ошибка. Повторите попытку.', 'Закрыть', { duration: 2200 })
           console.log({ err })
         })
   }
