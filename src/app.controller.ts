@@ -18,6 +18,6 @@ export class AppController {
 
   @Post()
   async addNewBill(@Body() newBill: IBill) {
-    return this.appService.addNewBill(newBill)
+      return await this.appService.addNewBill(newBill)
   }
 }

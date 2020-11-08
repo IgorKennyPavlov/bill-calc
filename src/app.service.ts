@@ -57,13 +57,7 @@ export class AppService {
     return (await this._archivedBillModel.find().sort({ _id: -1 }).limit(1).exec())[0]
   }
 
-  addNewBill(newBill: IBill) {
-    try {
-      new this._archivedBillModel(newBill).save()
-    } catch (err) {
-      console.log({ err })
-      return { status: 'failure' }
-    }
-    return { status: 'success' }
+  async addNewBill(newBill: IBill) {
+    return await new this._archivedBillModel(newBill).save()
   }
 }
