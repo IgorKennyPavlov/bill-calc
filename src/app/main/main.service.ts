@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core'
 import { ArchiveService } from '../archive/archive.service'
 import { IBill } from '../shared/bill/bill.component'
+import { MatSnackBar } from '@angular/material/snack-bar'
 
 const RUSSIAN_MONTHS = [
   'январь',
@@ -27,7 +28,7 @@ export class MainService {
   private _lastBill: IBill
   newBill: IBill = null
 
-  constructor(private _archiveService: ArchiveService) {
+  constructor(private _archiveService: ArchiveService, private _snackBar: MatSnackBar) {
     _archiveService.getLastArchivedBill()
       .subscribe(lastBill => this._lastBill = lastBill)
   }
@@ -99,22 +100,21 @@ export class MainService {
   }
 
   saveNewBill() {
-    // TODO Добавить обратную связь после сохранения (вывести новую запись, либо показать сообщение об ошибке)
+    // TODO Стилизовать всплывающие подсказки (успех, ошибка)
     this._archiveService.saveBill(this.newBill)
-      .subscribe((res: { status: 'success' | 'failure' }) => {
-        if (res.status === 'success') {
-          console.log({ res })
-          // console.table({ coldWaterUsed, coldWaterTotal })
-          // console.table({ hotWaterUsed, hotWaterTotal })
-          // console.table({ waterUtilizationTotal })
-          // console.table({ electricityUsed, electricityTotal })
-          // console.table({ total })
+      .subscribe(
+        res => {
+          if (!res) {
+            return
+          }
 
+          this._snackBar.open('Запись добавлена в архив', 'Закрыть', { duration: 2200 })
           this.clearNewBill()
-        } else {
-          console.log({ res })
-        }
-      })
+        },
+        err => {
+          this._snackBar.open('Произошла ошибка. Попробуйте ещё.', 'Закрыть', { duration: 2200 })
+          console.log({ err })
+        })
   }
 
   clearNewBill() {

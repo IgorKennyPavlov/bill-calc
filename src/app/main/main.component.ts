@@ -1,7 +1,7 @@
 import { Component } from '@angular/core'
+import { AbstractControl, FormControl, Validators } from '@angular/forms'
 import { MainService } from './main.service'
 import { IBill } from '../shared/bill/bill.component'
-import { AbstractControl, FormControl, Validators } from '@angular/forms'
 import { getErrorMessage, zeroValidator } from '../shared/validators'
 
 @Component({

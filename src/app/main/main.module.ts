@@ -7,6 +7,7 @@ import { HttpClientModule } from '@angular/common/http'
 import { MatButtonModule } from '@angular/material/button'
 import { MatFormFieldModule } from '@angular/material/form-field'
 import { MatInputModule } from '@angular/material/input'
+import { MatSnackBarModule } from '@angular/material/snack-bar'
 
 import { MainComponent } from './main.component'
 import { CounterRecognizerComponent } from './counter-recognizer/counter-recognizer.component'
@@ -28,7 +29,8 @@ import { SharedModule } from '../shared/shared.module'
     SharedModule,
     MatButtonModule,
     MatFormFieldModule,
-    MatInputModule
+    MatInputModule,
+    MatSnackBarModule
   ],
   providers: [MainService],
   declarations: [MainComponent, CounterRecognizerComponent]
