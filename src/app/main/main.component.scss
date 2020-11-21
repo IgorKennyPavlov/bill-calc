@@ -34,7 +34,7 @@
   }
 }
 
-.recognized-text {
+mat-form-field {
   margin: 20px 0;
 }
 
@@ -57,3 +57,17 @@ app-bill {
   }
 }
 
+@media screen and (max-width: 1279px) {
+  .counter-recognizers {
+    flex-direction: column;
+  }
+
+  app-bill {
+    width: 100%;
+    border: {
+      right: none;
+      left: none;
+      radius: unset;
+    }
+  }
+}

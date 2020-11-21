@@ -1,8 +1,17 @@
 import { Component } from '@angular/core'
-import { AbstractControl, FormControl, Validators } from '@angular/forms'
+import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms'
+import { ActivatedRoute } from '@angular/router'
 import { MainService } from './main.service'
 import { IBill } from '../shared/bill/bill.component'
 import { getErrorMessage, zeroValidator } from '../shared/validators'
+
+interface ICounterSchema {
+  title: string
+  titleClass: string | string[] | Set<string> | { [klass: string]: any }
+  formCtrlName: string
+  brightness?: number
+  contrast?: number
+}
 
 @Component({
   selector: 'app-main',
@@ -11,40 +20,63 @@ import { getErrorMessage, zeroValidator } from '../shared/validators'
 })
 export class MainComponent {
 
-  countersSchema = [
+  countersForm: FormGroup
+
+  countersSchema: ICounterSchema[] = [
     {
       title: 'Холодная вода',
       titleClass: 'cold-water',
-      ctrl: new FormControl('00000', [Validators.required, zeroValidator])
+      formCtrlName: 'coldWater'
     },
     {
       title: 'Горячая вода',
       titleClass: 'hot-water',
-      ctrl: new FormControl('00000', [Validators.required, zeroValidator])
+      formCtrlName: 'hotWater'
+
     },
     {
       title: 'Эл. энергия',
       titleClass: 'electricity',
-      ctrl: new FormControl('00000', [Validators.required, zeroValidator]),
+      formCtrlName: 'electricity',
       brightness: 1.4,
       contrast: 30
     }
   ]
 
-  get someCountersInvalid(): boolean {
-    return this.countersSchema.some(counter => counter.ctrl.invalid)
-  }
-
   get newBill(): IBill {
     return this._service.newBill
   }
 
-  constructor(private _service: MainService) {
+  constructor(
+    private _fb: FormBuilder,
+    private _service: MainService,
+    private _activatedRoute: ActivatedRoute
+  ) {
+    const { coldWaterCost, hotWaterCost, electricityCost } = this._service.lastBill = this._activatedRoute.snapshot.data.mainResolver
+
+    // TODO попробовать типизировать через объект
+    this.countersForm = _fb.group({
+      coldWater: _fb.group({
+        volume: ['00000', [Validators.required, zeroValidator]],
+        cost: [coldWaterCost, [Validators.required, zeroValidator]]
+      }),
+      hotWater: _fb.group({
+        volume: ['00000', [Validators.required, zeroValidator]],
+        cost: [hotWaterCost, [Validators.required, zeroValidator]]
+      }),
+      electricity: _fb.group({
+        volume: ['00000', [Validators.required, zeroValidator]],
+        cost: [electricityCost, [Validators.required, zeroValidator]]
+      })
+    })
   }
 
   calculateBill() {
-    const [coldWater, hotWater, electricity] = this.countersSchema.map(counter => counter.ctrl.value)
-    this._service.calculateBill(coldWater, hotWater, electricity)
+    this._service.calculateBill(
+      (Object.values(this.countersForm.value) as { volume: string, cost: string }[])
+        .map(i => ([+i.volume, +i.cost]))
+        .reduce((acc, cur) => [...acc, ...cur], [])
+    )
   }
 
   saveNewBill() {
@@ -53,10 +85,6 @@ export class MainComponent {
 
   clearNewBill() {
     this._service.clearNewBill()
-  }
-
-  updateControl(ctrl: FormControl, event: string) {
-    ctrl.setValue(event)
   }
 
   getErrorMessage(ctrl: AbstractControl): string {

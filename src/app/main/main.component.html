@@ -1,22 +1,29 @@
-<div class="counter-recognizers">
-  <div *ngFor="let counter of countersSchema"
-       class="cr-wrapper">
+<div class="counter-recognizers"
+     [formGroup]="countersForm">
+  <form *ngFor="let counter of countersSchema"
+        class="cr-wrapper"
+        [formGroupName]="counter.formCtrlName">
     <h2 class="title"
         [ngClass]="counter.titleClass">
       {{ counter.title }}
     </h2>
+    <mat-form-field appearance="fill">
+      <mat-label>Стоимость</mat-label>
+      <input formControlName="cost"
+             matInput>
+      <mat-error>{{getErrorMessage(countersForm.get([counter.formCtrlName, 'cost']))}}</mat-error>
+    </mat-form-field>
     <app-counter-recognizer [brightness]="counter.brightness"
                             [contrast]="counter.contrast"
-                            (ocrComplete)="updateControl(counter.ctrl, $event)">
+                            (ocrComplete)="countersForm.get([counter.formCtrlName, 'volume']).setValue($event)">
     </app-counter-recognizer>
-    <div class="recognized-text">
-      <mat-form-field appearance="fill">
-        <input matInput
-               [formControl]="counter.ctrl">
-        <mat-error>{{getErrorMessage(counter.ctrl)}}</mat-error>
-      </mat-form-field>
-    </div>
-  </div>
+    <mat-form-field appearance="fill">
+      <mat-label>Счётчик</mat-label>
+      <input formControlName="volume"
+             matInput>
+      <mat-error>{{getErrorMessage(countersForm.get([counter.formCtrlName, 'volume']))}}</mat-error>
+    </mat-form-field>
+  </form>
 </div>
 
 <app-bill *ngIf="newBill"
@@ -28,7 +35,7 @@
           class="btn"
           color="primary"
           mat-raised-button
-          [disabled]="someCountersInvalid"
+          [disabled]="!countersForm.valid"
           (click)="calculateBill()">
     Посчитать стоимость
   </button>

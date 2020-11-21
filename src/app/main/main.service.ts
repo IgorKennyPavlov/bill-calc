@@ -18,33 +18,42 @@ const RUSSIAN_MONTHS = [
   'декабрь'
 ]
 
-const coldWaterCost = 23.9
-const hotWaterCost = ~~((24.79 + 164.64) * 100) / 100 // Носитель + энергия
-const waterUtilizationCost = 29.09
-const electricityCost = 4.01
-
 // TODO Отрефакторить всплывашки. Стилизовать под успех/ошибку
 @Injectable()
 export class MainService {
-  private _lastBill: IBill
+  lastBill: IBill = null
   newBill: IBill = null
 
-  constructor(private _archiveService: ArchiveService, private _snackBar: MatSnackBar) {
-    _archiveService.getLastArchivedBill()
-      .subscribe(lastBill => this._lastBill = lastBill)
+  constructor(
+    private _archiveService: ArchiveService,
+    private _snackBar: MatSnackBar
+  ) {
   }
 
-  calculateBill(coldWaterCounter: number, hotWaterCounter: number, electricityCounter: number) {
-    if (!(coldWaterCounter && hotWaterCounter && electricityCounter)) {
+  calculateBill(calculationData: number[]) {
+    if (calculationData.some(i => !i)) {
       this._snackBar.open('Ошибка в новых данных. Повторите попытку.', 'Закрыть', { duration: 2200 })
       return
     }
 
+    const [
+      coldWaterCounter,
+      coldWaterCost,
+      hotWaterCounter,
+      hotWaterCost,
+      electricityCounter,
+      electricityCost
+    ] = calculationData
+
+    // TODO стоимость утилизации тоже нужно получать через параметры
+    const waterUtilizationCost = 29.09
+
+    // TODO обработать ситуацию, если предыдущей записи в базе нет. Может, не здесь, а отдельным методом.
     const {
       coldWaterCounter: oldColdWaterCounter,
       hotWaterCounter: oldHotWaterCounter,
       electricityCounter: oldElectricityCounter
-    } = this._lastBill
+    } = this.lastBill
 
     if (!(oldColdWaterCounter && oldHotWaterCounter && oldElectricityCounter)) {
       this._snackBar.open('Ошибка в старых данных. Повторите попытку.', 'Закрыть', { duration: 2200 })
@@ -106,7 +115,7 @@ export class MainService {
         },
         err => {
           this._snackBar.open('Произошла ошибка. Повторите попытку.', 'Закрыть', { duration: 2200 })
-          console.log({ err })
+          console.error({ err })
         })
   }
 

@@ -15,3 +15,13 @@
     margin-top: 20px;
   }
 }
+
+@media screen and (max-width: 991px) {
+  .counters-data-wrap {
+    flex-direction: column;
+
+    .counter-data {
+      margin: 20px 0;
+    }
+  }
+}
