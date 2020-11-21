@@ -45,7 +45,10 @@ export class MainService {
       electricityCost
     ] = calculationData
 
-    // TODO стоимость утилизации тоже нужно получать через параметры
+    // TODO стоимость утилизации тоже нужно получать через параметры.
+    //  Форму стоимости вообще лучше вынести в модальное окно.
+    //  Разделить стоимость для горячей воды.
+    //  Начать сохранять в базу стоимость утилизации.
     const waterUtilizationCost = 29.09
 
     // TODO обработать ситуацию, если предыдущей записи в базе нет. Может, не здесь, а отдельным методом.
@@ -106,12 +109,10 @@ export class MainService {
     this._archiveService.saveBill(this.newBill)
       .subscribe(
         res => {
-          if (!res) {
-            return
+          if (res) {
+            this._snackBar.open('Запись добавлена в архив', 'Закрыть', { duration: 2200 })
+            this.clearNewBill()
           }
-
-          this._snackBar.open('Запись добавлена в архив', 'Закрыть', { duration: 2200 })
-          this.clearNewBill()
         },
         err => {
           this._snackBar.open('Произошла ошибка. Повторите попытку.', 'Закрыть', { duration: 2200 })
