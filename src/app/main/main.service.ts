@@ -1,7 +1,8 @@
 import { Injectable } from '@angular/core'
+import { MatSnackBar } from '@angular/material/snack-bar'
+import { FormBuilder } from '@angular/forms'
 import { ArchiveService } from '../archive/archive.service'
 import { IBill } from '../shared/bill/bill.component'
-import { MatSnackBar } from '@angular/material/snack-bar'
 
 const RUSSIAN_MONTHS = [
   'январь',
@@ -25,6 +26,7 @@ export class MainService {
   newBill: IBill = null
 
   constructor(
+    private _fb: FormBuilder,
     private _archiveService: ArchiveService,
     private _snackBar: MatSnackBar
   ) {
@@ -32,34 +34,34 @@ export class MainService {
 
   calculateBill(calculationData: number[]) {
     if (calculationData.some(i => !i)) {
-      this._snackBar.open('Ошибка в новых данных. Повторите попытку.', 'Закрыть', { duration: 2200 })
+      this._snackBar.open(
+        'Ошибка в новых данных. Повторите попытку.',
+        'Закрыть',
+        { duration: 2200 }
+      )
       return
     }
 
-    const [
-      coldWaterCounter,
-      coldWaterPrice,
-      hotWaterCounter,
-      hotWaterPrice,
-      electricityCounter,
-      electricityPrice
-    ] = calculationData
-
-    // TODO стоимость утилизации тоже нужно получать через параметры.
-    //  Форму стоимости вообще лучше вынести в модальное окно.
-    //  Разделить стоимость для горячей воды.
-    //  Начать сохранять в базу стоимость утилизации.
-    const waterUtilizationPrice = 29.09
+    const [coldWaterCounter, hotWaterCounter, electricityCounter] = calculationData
 
     // TODO обработать ситуацию, если предыдущей записи в базе нет. Может, не здесь, а отдельным методом.
+    // TODO Разделить стоимость для горячей воды.
     const {
       coldWaterCounter: oldColdWaterCounter,
       hotWaterCounter: oldHotWaterCounter,
-      electricityCounter: oldElectricityCounter
+      electricityCounter: oldElectricityCounter,
+      coldWaterPrice,
+      hotWaterPrice,
+      waterUtilizationPrice,
+      electricityPrice
     } = this.lastBill
 
     if (!(oldColdWaterCounter && oldHotWaterCounter && oldElectricityCounter)) {
-      this._snackBar.open('Ошибка в старых данных. Повторите попытку.', 'Закрыть', { duration: 2200 })
+      this._snackBar.open(
+        'Ошибка в старых данных. Повторите попытку.',
+        'Закрыть',
+        { duration: 2200 }
+      )
       return
     }
 
@@ -110,12 +112,20 @@ export class MainService {
       .subscribe(
         res => {
           if (res) {
-            this._snackBar.open('Запись добавлена в архив', 'Закрыть', { duration: 2200 })
+            this._snackBar.open(
+              'Запись добавлена в архив',
+              'Закрыть',
+              { duration: 2200 }
+            )
             this.clearNewBill()
           }
         },
         err => {
-          this._snackBar.open('Произошла ошибка. Повторите попытку.', 'Закрыть', { duration: 2200 })
+          this._snackBar.open(
+            'Произошла ошибка. Повторите попытку.',
+            'Закрыть',
+            { duration: 2200 }
+          )
           console.error({ err })
         })
   }

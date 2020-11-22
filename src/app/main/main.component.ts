@@ -2,6 +2,7 @@ import { Component } from '@angular/core'
 import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms'
 import { ActivatedRoute } from '@angular/router'
 import { MatDialog } from '@angular/material/dialog'
+import { take } from 'rxjs/operators'
 import { MainService } from './main.service'
 import { IBill } from '../shared/bill/bill.component'
 import { getErrorMessage, zeroValidator } from '../shared/validators'
@@ -21,8 +22,14 @@ interface ICounterSchema {
   styleUrls: ['./main.component.scss']
 })
 export class MainComponent {
-
   countersForm: FormGroup
+
+  prices = {
+    coldWaterPrice: 0,
+    hotWaterPrice: 0,
+    waterUtilizationPrice: 0,
+    electricityPrice: 0
+  }
 
   countersSchema: ICounterSchema[] = [
     {
@@ -34,7 +41,6 @@ export class MainComponent {
       title: 'Горячая вода',
       titleClass: 'hot-water',
       formCtrlName: 'hotWater'
-
     },
     {
       title: 'Эл. энергия',
@@ -44,6 +50,14 @@ export class MainComponent {
       contrast: 30
     }
   ]
+
+  get lastBill(): IBill {
+    return this._service.lastBill
+  }
+
+  set lastBill(newVal) {
+    this._service.lastBill = newVal
+  }
 
   get newBill(): IBill {
     return this._service.newBill
@@ -55,30 +69,19 @@ export class MainComponent {
     private _activatedRoute: ActivatedRoute,
     private _dialog: MatDialog
   ) {
-    const { coldWaterPrice, hotWaterPrice, electricityPrice } = this._service.lastBill = this._activatedRoute.snapshot.data.mainResolver
-
-    // TODO попробовать типизировать через объект
+    // TODO попробовать типизировать через объекты
     this.countersForm = _fb.group({
-      coldWater: _fb.group({
-        volume: ['00000', [Validators.required, zeroValidator]],
-        price: [coldWaterPrice, [Validators.required, zeroValidator]]
-      }),
-      hotWater: _fb.group({
-        volume: ['00000', [Validators.required, zeroValidator]],
-        price: [hotWaterPrice, [Validators.required, zeroValidator]]
-      }),
-      electricity: _fb.group({
-        volume: ['00000', [Validators.required, zeroValidator]],
-        price: [electricityPrice, [Validators.required, zeroValidator]]
-      })
+      coldWater: ['00000', [Validators.required, zeroValidator]],
+      hotWater: ['00000', [Validators.required, zeroValidator]],
+      electricity: ['00000', [Validators.required, zeroValidator]]
     })
+
+    this.lastBill = this._activatedRoute.snapshot.data.mainResolver
   }
 
   calculateBill() {
     this._service.calculateBill(
-      (Object.values(this.countersForm.value) as { volume: string, price: string }[])
-        .map(i => ([+i.volume, +i.price]))
-        .reduce((acc, cur) => [...acc, ...cur], [])
+      [...Object.values(this.countersForm.value)].map(i => +i)
     )
   }
 
@@ -96,10 +99,14 @@ export class MainComponent {
 
   openEditPriceDialog() {
     const dialogRef = this._dialog.open(EditPriceDialogComponent)
-    dialogRef.afterClosed().subscribe(changesSaved => {
-      if (changesSaved) {
-        console.log('save changes')
-      }
-    })
+    // TODO сделать надёжную отписку
+    dialogRef.afterClosed()
+      .pipe(take(1))
+      .subscribe(changesSaved => {
+        if (changesSaved) {
+          // TODO возможно, лучше сохранять новые значения отдельно, а не перезаписывать данные с сервера. Подумать
+          this.lastBill = { ...this._service.lastBill, ...changesSaved }
+        }
+      })
   }
 }
