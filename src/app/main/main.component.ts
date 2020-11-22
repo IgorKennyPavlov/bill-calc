@@ -55,29 +55,29 @@ export class MainComponent {
     private _activatedRoute: ActivatedRoute,
     private _dialog: MatDialog
   ) {
-    const { coldWaterCost, hotWaterCost, electricityCost } = this._service.lastBill = this._activatedRoute.snapshot.data.mainResolver
+    const { coldWaterPrice, hotWaterPrice, electricityPrice } = this._service.lastBill = this._activatedRoute.snapshot.data.mainResolver
 
     // TODO попробовать типизировать через объект
     this.countersForm = _fb.group({
       coldWater: _fb.group({
         volume: ['00000', [Validators.required, zeroValidator]],
-        cost: [coldWaterCost, [Validators.required, zeroValidator]]
+        price: [coldWaterPrice, [Validators.required, zeroValidator]]
       }),
       hotWater: _fb.group({
         volume: ['00000', [Validators.required, zeroValidator]],
-        cost: [hotWaterCost, [Validators.required, zeroValidator]]
+        price: [hotWaterPrice, [Validators.required, zeroValidator]]
       }),
       electricity: _fb.group({
         volume: ['00000', [Validators.required, zeroValidator]],
-        cost: [electricityCost, [Validators.required, zeroValidator]]
+        price: [electricityPrice, [Validators.required, zeroValidator]]
       })
     })
   }
 
   calculateBill() {
     this._service.calculateBill(
-      (Object.values(this.countersForm.value) as { volume: string, cost: string }[])
-        .map(i => ([+i.volume, +i.cost]))
+      (Object.values(this.countersForm.value) as { volume: string, price: string }[])
+        .map(i => ([+i.volume, +i.price]))
         .reduce((acc, cur) => [...acc, ...cur], [])
     )
   }
@@ -94,7 +94,7 @@ export class MainComponent {
     return getErrorMessage(ctrl)
   }
 
-  openEditCostDialog() {
+  openEditPriceDialog() {
     const dialogRef = this._dialog.open(EditPriceDialogComponent)
     dialogRef.afterClosed().subscribe(changesSaved => {
       if (changesSaved) {

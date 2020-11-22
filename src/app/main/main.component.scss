@@ -33,7 +33,7 @@
   }
 }
 
-.cost-panel {
+.price-panel {
   display: flex;
   align-items: center;
   align-self: start;
@@ -44,7 +44,7 @@
   }
   grid-column: 11 / span 2;
 
-  .cost-wrap {
+  .price-wrap {
     display: flex;
     justify-content: space-between;
     width: 100%;
@@ -89,7 +89,7 @@ app-bill {
     grid-column: 1 / span 12;
   }
 
-  .cost-panel {
+  .price-panel {
     grid-column: 4 / span 6;
   }
 

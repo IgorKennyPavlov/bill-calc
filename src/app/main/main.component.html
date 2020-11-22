@@ -20,23 +20,23 @@
   </form>
 </div>
 
-<div class="cost-panel">
+<div class="price-panel">
   <h2>Цены</h2>
-  <div class="cost-wrap">
+  <div class="price-wrap">
     <div class="title">Хол. вода</div>
-    <div class="cost">{{ countersForm.get(['coldWater', 'cost']).value }}</div>
+    <div class="price">{{ countersForm.get(['coldWater', 'price']).value }}</div>
   </div>
-  <div class="cost-wrap">
+  <div class="price-wrap">
     <div class="title">Гор. вода</div>
-    <div class="cost">{{ countersForm.get(['hotWater', 'cost']).value }}</div>
+    <div class="price">{{ countersForm.get(['hotWater', 'price']).value }}</div>
   </div>
-  <div class="cost-wrap">
+  <div class="price-wrap">
     <div class="title">Эл. энергия</div>
-    <div class="cost">{{ countersForm.get(['electricity', 'cost']).value }}</div>
+    <div class="price">{{ countersForm.get(['electricity', 'price']).value }}</div>
   </div>
   <button mat-raised-button
           class="open-edit-dialog-btn"
-          (click)="openEditCostDialog()">
+          (click)="openEditPriceDialog()">
     Редактировать
   </button>
 </div>

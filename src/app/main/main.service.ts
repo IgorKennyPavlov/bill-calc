@@ -38,18 +38,18 @@ export class MainService {
 
     const [
       coldWaterCounter,
-      coldWaterCost,
+      coldWaterPrice,
       hotWaterCounter,
-      hotWaterCost,
+      hotWaterPrice,
       electricityCounter,
-      electricityCost
+      electricityPrice
     ] = calculationData
 
     // TODO стоимость утилизации тоже нужно получать через параметры.
     //  Форму стоимости вообще лучше вынести в модальное окно.
     //  Разделить стоимость для горячей воды.
     //  Начать сохранять в базу стоимость утилизации.
-    const waterUtilizationCost = 29.09
+    const waterUtilizationPrice = 29.09
 
     // TODO обработать ситуацию, если предыдущей записи в базе нет. Может, не здесь, а отдельным методом.
     const {
@@ -71,10 +71,10 @@ export class MainService {
     const hotWaterUsed = hotWaterCounter - oldHotWaterCounter
     const electricityUsed = electricityCounter - oldElectricityCounter
 
-    const coldWaterTotal = ~~(coldWaterUsed * coldWaterCost * 100) / 100
-    const hotWaterTotal = ~~(hotWaterUsed * hotWaterCost * 100) / 100
-    const waterUtilizationTotal = ~~((coldWaterUsed + hotWaterUsed) * waterUtilizationCost * 100) / 100
-    const electricityTotal = ~~(electricityUsed * electricityCost * 100) / 100
+    const coldWaterTotal = ~~(coldWaterUsed * coldWaterPrice * 100) / 100
+    const hotWaterTotal = ~~(hotWaterUsed * hotWaterPrice * 100) / 100
+    const waterUtilizationTotal = ~~((coldWaterUsed + hotWaterUsed) * waterUtilizationPrice * 100) / 100
+    const electricityTotal = ~~(electricityUsed * electricityPrice * 100) / 100
 
     const total = ~~((coldWaterTotal + hotWaterTotal + waterUtilizationTotal + electricityTotal) * 100) / 100
 
@@ -84,20 +84,20 @@ export class MainService {
 
       coldWaterCounter,
       coldWaterUsed,
-      coldWaterCost,
+      coldWaterPrice,
       coldWaterTotal,
 
       hotWaterCounter,
       hotWaterUsed,
-      hotWaterCost,
+      hotWaterPrice,
       hotWaterTotal,
 
-      waterUtilizationCost,
+      waterUtilizationPrice,
       waterUtilizationTotal,
 
       electricityCounter,
       electricityUsed,
-      electricityCost,
+      electricityPrice,
       electricityTotal,
 
       total
