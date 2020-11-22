@@ -1,18 +1,12 @@
 <div class="counter-recognizers"
      [formGroup]="countersForm">
   <form *ngFor="let counter of countersSchema"
-        class="cr-wrapper"
+        class="cr-form"
         [formGroupName]="counter.formCtrlName">
     <h2 class="title"
         [ngClass]="counter.titleClass">
       {{ counter.title }}
     </h2>
-    <mat-form-field appearance="fill">
-      <mat-label>Стоимость</mat-label>
-      <input formControlName="cost"
-             matInput>
-      <mat-error>{{getErrorMessage(countersForm.get([counter.formCtrlName, 'cost']))}}</mat-error>
-    </mat-form-field>
     <app-counter-recognizer [brightness]="counter.brightness"
                             [contrast]="counter.contrast"
                             (ocrComplete)="countersForm.get([counter.formCtrlName, 'volume']).setValue($event)">
@@ -24,6 +18,27 @@
       <mat-error>{{getErrorMessage(countersForm.get([counter.formCtrlName, 'volume']))}}</mat-error>
     </mat-form-field>
   </form>
+</div>
+
+<div class="cost-panel">
+  <h2>Цены</h2>
+  <div class="cost-wrap">
+    <div class="title">Хол. вода</div>
+    <div class="cost">{{ countersForm.get(['coldWater', 'cost']).value }}</div>
+  </div>
+  <div class="cost-wrap">
+    <div class="title">Гор. вода</div>
+    <div class="cost">{{ countersForm.get(['hotWater', 'cost']).value }}</div>
+  </div>
+  <div class="cost-wrap">
+    <div class="title">Эл. энергия</div>
+    <div class="cost">{{ countersForm.get(['electricity', 'cost']).value }}</div>
+  </div>
+  <button mat-raised-button
+          class="open-edit-dialog-btn"
+          (click)="openEditCostDialog()">
+    Редактировать
+  </button>
 </div>
 
 <app-bill *ngIf="newBill"

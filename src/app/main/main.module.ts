@@ -12,28 +12,31 @@ import { MatSnackBarModule } from '@angular/material/snack-bar'
 import { MainComponent } from './main.component'
 import { CounterRecognizerComponent } from './counter-recognizer/counter-recognizer.component'
 import { MainService } from './main.service'
-import { SharedModule } from '../shared/shared.module'
+import { SharedModule } from '../shared/shared.module';
+import { EditPriceDialogComponent } from './edit-price-dialog/edit-price-dialog.component'
+import { MatDialogModule } from '@angular/material/dialog'
 
 @NgModule({
-  imports: [
-    CommonModule,
-    RouterModule,
-    RouterModule.forChild([
-      {
-        path: '',
-        component: MainComponent
-      }
-    ]),
-    ReactiveFormsModule,
-    HttpClientModule,
-    SharedModule,
-    MatButtonModule,
-    MatFormFieldModule,
-    MatInputModule,
-    MatSnackBarModule
-  ],
+    imports: [
+        CommonModule,
+        RouterModule,
+        RouterModule.forChild([
+            {
+                path: '',
+                component: MainComponent
+            }
+        ]),
+        ReactiveFormsModule,
+        HttpClientModule,
+        SharedModule,
+        MatButtonModule,
+        MatFormFieldModule,
+        MatInputModule,
+        MatSnackBarModule,
+        MatDialogModule
+    ],
   providers: [MainService],
-  declarations: [MainComponent, CounterRecognizerComponent]
+  declarations: [MainComponent, CounterRecognizerComponent, EditPriceDialogComponent]
 })
 export class MainModule {
 }
