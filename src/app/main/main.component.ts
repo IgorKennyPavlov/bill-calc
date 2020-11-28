@@ -1,7 +1,8 @@
-import { Component } from '@angular/core'
+import { Component, OnDestroy } from '@angular/core'
 import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms'
 import { ActivatedRoute } from '@angular/router'
 import { MatDialog } from '@angular/material/dialog'
+import { Subscription } from 'rxjs'
 import { take } from 'rxjs/operators'
 import { MainService } from './main.service'
 import { IBill } from '../shared/bill/bill.component'
@@ -21,15 +22,12 @@ interface ICounterSchema {
   templateUrl: './main.component.html',
   styleUrls: ['./main.component.scss']
 })
-export class MainComponent {
+export class MainComponent implements OnDestroy {
+  private _subscriptions: Subscription[] = []
+
   countersForm: FormGroup
 
-  prices = {
-    coldWaterPrice: 0,
-    hotWaterPrice: 0,
-    waterUtilizationPrice: 0,
-    electricityPrice: 0
-  }
+  pricesSchema: { title: string, value: number }[] = []
 
   countersSchema: ICounterSchema[] = [
     {
@@ -69,7 +67,7 @@ export class MainComponent {
     private _activatedRoute: ActivatedRoute,
     private _dialog: MatDialog
   ) {
-    // TODO попробовать типизировать через объекты
+    // TODO типизировать через объект
     this.countersForm = _fb.group({
       coldWater: ['00000', [Validators.required, zeroValidator]],
       hotWater: ['00000', [Validators.required, zeroValidator]],
@@ -77,6 +75,29 @@ export class MainComponent {
     })
 
     this.lastBill = this._activatedRoute.snapshot.data.mainResolver
+
+    this.pricesSchema = [
+      {
+        title: 'Хол. вода',
+        value: this.lastBill['coldWaterPrice']
+      },
+      {
+        title: 'Гор. вода',
+        value: this.lastBill['hotWaterPrice']
+      },
+      {
+        title: 'Водоотведение',
+        value: this.lastBill['waterUtilizationPrice']
+      },
+      {
+        title: 'Эл. энергия',
+        value: this.lastBill['electricityPrice']
+      }
+    ]
+  }
+
+  ngOnDestroy() {
+    this._subscriptions.forEach(s => s.unsubscribe())
   }
 
   calculateBill() {
@@ -98,15 +119,10 @@ export class MainComponent {
   }
 
   openEditPriceDialog() {
-    const dialogRef = this._dialog.open(EditPriceDialogComponent)
-    // TODO сделать надёжную отписку
-    dialogRef.afterClosed()
-      .pipe(take(1))
-      .subscribe(changesSaved => {
-        if (changesSaved) {
-          // TODO возможно, лучше сохранять новые значения отдельно, а не перезаписывать данные с сервера. Подумать
-          this.lastBill = { ...this._service.lastBill, ...changesSaved }
-        }
-      })
+    this._subscriptions.push(
+      this._dialog.open(EditPriceDialogComponent)
+        .afterClosed()
+        .pipe(take(1))
+        .subscribe(changes => changes && (this.lastBill = { ...this._service.lastBill, ...changes })))
   }
 }

@@ -20,23 +20,11 @@
 </form>
 
 <div class="price-panel">
-  <!--  TODO отрефакторить -->
   <h2>Цены</h2>
-  <div class="price-wrap">
-    <div class="title">Хол. вода</div>
-    <div class="price">{{ lastBill.coldWaterPrice }}</div>
-  </div>
-  <div class="price-wrap">
-    <div class="title">Гор. вода</div>
-    <div class="price">{{ lastBill.hotWaterPrice }}</div>
-  </div>
-  <div class="price-wrap">
-    <div class="title">Водоотведение</div>
-    <div class="price">{{ lastBill.waterUtilizationPrice }}</div>
-  </div>
-  <div class="price-wrap">
-    <div class="title">Эл. энергия</div>
-    <div class="price">{{ lastBill.electricityPrice }}</div>
+  <div *ngFor="let price of pricesSchema"
+       class="price-wrap">
+    <div class="title">{{ price.title }}</div>
+    <div class="price">{{ price.value }}</div>
   </div>
   <button class="open-edit-dialog-btn"
           mat-raised-button
