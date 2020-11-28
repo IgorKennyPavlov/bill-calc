@@ -44,8 +44,7 @@ export class MainService {
 
     const [coldWaterCounter, hotWaterCounter, electricityCounter] = calculationData
 
-    // TODO обработать ситуацию, если предыдущей записи в базе нет. Может, не здесь, а отдельным методом.
-    // TODO Разделить стоимость для горячей воды.
+    // TODO Разделить стоимость горячей воды.
     const {
       coldWaterCounter: oldColdWaterCounter,
       hotWaterCounter: oldHotWaterCounter,
@@ -65,7 +64,7 @@ export class MainService {
       return
     }
 
-    const now = new Date(Date.now())
+    const now = new Date()
     const month = RUSSIAN_MONTHS[(now.getMonth() || 12) - 1]
     const year = now.getFullYear()
 

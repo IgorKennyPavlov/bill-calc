@@ -6,8 +6,8 @@
     <mat-form-field *ngFor="let field of priceFormSchema"
                     appearance="fill">
       <mat-label>{{ field.title }}</mat-label>
-      <input [formControlName]="field.formCtrlName"
-             matInput>
+      <input matInput
+             [formControlName]="field.formCtrlName">
       <mat-error>{{getErrorMessage(priceForm.get(field.formCtrlName))}}</mat-error>
     </mat-form-field>
   </form>

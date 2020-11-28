@@ -1,0 +1,17 @@
+:host {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+}
+
+.init-bill-form {
+  display: flex;
+  flex-direction: column;
+  min-width: 320px;
+
+  mat-datepicker-toggle {
+    position: absolute;
+    top: -50%;
+    right: 0;
+  }
+}

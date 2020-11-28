@@ -14,6 +14,10 @@ const routes: Routes = [
   {
     path: 'archive',
     loadChildren: () => import('src/app/archive/archive.module').then(m => m.ArchiveModule)
+  },
+  {
+    path: 'initial-bill',
+    loadChildren: () => import('src/app/initial-bill/initial-bill.module').then(m => m.InitialBillModule)
   }
 ]
 
