@@ -64,6 +64,7 @@ export class MainService {
       return
     }
 
+    // TODO даты на moment
     const now = new Date()
     const month = RUSSIAN_MONTHS[(now.getMonth() || 12) - 1]
     const year = now.getFullYear()
@@ -81,7 +82,7 @@ export class MainService {
 
     this.newBill = {
       timestamp: now.toISOString(),
-      month: month + ' ' + year,
+      monthYear: month + ' ' + year,
 
       coldWaterCounter,
       coldWaterUsed,

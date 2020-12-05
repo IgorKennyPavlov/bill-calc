@@ -17,7 +17,7 @@ export class MainResolver implements Resolve<IBill> {
     return this._archiveService.getLastArchivedBill()
       .pipe(
         take(1),
-        tap(lastBill => !lastBill && this._router.navigate(['/', 'initial-bill']))
+        tap(lastBill => !lastBill && this._router.navigate(['initial-bill']))
       )
   }
 }

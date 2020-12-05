@@ -1,4 +1,5 @@
 import { Component } from '@angular/core'
+import * as moment from 'moment'
 
 @Component({
   selector: 'app-root',
@@ -16,4 +17,8 @@ export class AppComponent {
       link: '/archive'
     }
   ]
+
+  constructor() {
+    moment.locale('ru')
+  }
 }

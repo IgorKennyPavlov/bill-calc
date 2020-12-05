@@ -3,7 +3,6 @@ import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/fo
 import { ActivatedRoute } from '@angular/router'
 import { MatDialog } from '@angular/material/dialog'
 import { Subscription } from 'rxjs'
-import { take } from 'rxjs/operators'
 import { MainService } from './main.service'
 import { IBill } from '../shared/bill/bill.component'
 import { getErrorMessage, zeroValidator } from '../shared/validators'
@@ -23,7 +22,7 @@ interface ICounterSchema {
   styleUrls: ['./main.component.scss']
 })
 export class MainComponent implements OnDestroy {
-  private _subscriptions: Subscription[] = []
+  private _subs: Subscription[] = []
 
   countersForm: FormGroup
 
@@ -97,7 +96,7 @@ export class MainComponent implements OnDestroy {
   }
 
   ngOnDestroy() {
-    this._subscriptions.forEach(s => s.unsubscribe())
+    this._subs.forEach(s => s.unsubscribe())
   }
 
   calculateBill() {
@@ -119,10 +118,9 @@ export class MainComponent implements OnDestroy {
   }
 
   openEditPriceDialog() {
-    this._subscriptions.push(
+    this._subs.push(
       this._dialog.open(EditPriceDialogComponent)
         .afterClosed()
-        .pipe(take(1))
         .subscribe(changes => changes && (this.lastBill = { ...this._service.lastBill, ...changes })))
   }
 }

@@ -2,7 +2,7 @@
   <mat-expansion-panel *ngFor="let bill of archiveBills">
     <mat-expansion-panel-header>
       <mat-panel-title>
-        {{ bill.month }}
+        {{ bill.monthYear }}
       </mat-panel-title>
     </mat-expansion-panel-header>
     <app-bill [billData]="bill"></app-bill>

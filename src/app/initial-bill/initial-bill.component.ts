@@ -1,19 +1,24 @@
-import { Component } from '@angular/core'
+import { Component, OnDestroy } from '@angular/core'
 import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms'
-import { DateAdapter } from '@angular/material/core'
+import { Router } from '@angular/router'
 import { MatDatepicker } from '@angular/material/datepicker'
+import { MatSnackBar } from '@angular/material/snack-bar'
 
+import { Subscription } from 'rxjs'
 import * as moment from 'moment'
 import { Moment } from 'moment'
 
 import { getErrorMessage, zeroValidator } from '../shared/validators'
+import { ArchiveService } from '../archive/archive.service'
 
 @Component({
   selector: 'app-initial-bill',
   templateUrl: './initial-bill.component.html',
   styleUrls: ['./initial-bill.component.scss']
 })
-export class InitialBillComponent {
+export class InitialBillComponent implements OnDestroy {
+  private _subs: Subscription[] = []
+
   billForm: FormGroup
 
   billFormSchema = [
@@ -92,27 +97,34 @@ export class InitialBillComponent {
     }
   ]
 
-  constructor(private _fb: FormBuilder, private readonly adapter: DateAdapter<Date>) {
-    this.adapter.setLocale('ru-RU')
-
+  constructor(
+    private _fb: FormBuilder,
+    private _router: Router,
+    private _snackBar: MatSnackBar,
+    private _archiveService: ArchiveService
+  ) {
     this.billForm = _fb.group({
       monthYear: [moment(), [Validators.required]],
-      coldWaterCounter: ['', [Validators.required]],
-      coldWaterUsed: '',
-      coldWaterPrice: ['', [Validators.required, zeroValidator]],
-      coldWaterTotal: '',
-      hotWaterCounter: ['', [Validators.required]],
-      hotWaterUsed: '',
-      hotWaterPrice: ['', [Validators.required, zeroValidator]],
-      hotWaterTotal: '',
-      waterUtilizationPrice: ['', [Validators.required, zeroValidator]],
-      waterUtilizationTotal: '',
-      electricityCounter: ['', [Validators.required]],
-      electricityUsed: '',
-      electricityPrice: ['', [Validators.required, zeroValidator]],
-      electricityTotal: '',
-      total: ''
+      coldWaterCounter: ['777', [Validators.required]],
+      coldWaterUsed: '777',
+      coldWaterPrice: ['777', [Validators.required, zeroValidator]],
+      coldWaterTotal: '777',
+      hotWaterCounter: ['777', [Validators.required]],
+      hotWaterUsed: '777',
+      hotWaterPrice: ['777', [Validators.required, zeroValidator]],
+      hotWaterTotal: '777',
+      waterUtilizationPrice: ['777', [Validators.required, zeroValidator]],
+      waterUtilizationTotal: '777',
+      electricityCounter: ['777', [Validators.required]],
+      electricityUsed: '777',
+      electricityPrice: ['777', [Validators.required, zeroValidator]],
+      electricityTotal: '777',
+      total: '777'
     })
+  }
+
+  ngOnDestroy() {
+    this._subs.forEach(s => s.unsubscribe())
   }
 
   setYear(updatedYear: Moment) {
@@ -135,7 +147,22 @@ export class InitialBillComponent {
   }
 
   saveInitialBill() {
-    // TODO доделать сохранение
-    console.log('initial bill saved')
+    const monthYear = this.billForm.get('monthYear').value.format('MMMM YYYY')
+    this._subs.push(
+      this._archiveService.saveBill({
+        timestamp: new Date().toISOString(),
+        ...this.billForm.value,
+        monthYear
+      }).subscribe(
+        () => this._router.navigate(['archive']),
+        err => {
+          this._snackBar.open(
+            'Произошла ошибка. Проверьте данные и повторите попытку.',
+            'Закрыть',
+            { duration: 2200 }
+          )
+          console.error({ err })
+        })
+    )
   }
 }

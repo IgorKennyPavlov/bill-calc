@@ -2,7 +2,7 @@ import { Component, Input } from '@angular/core'
 
 export interface IBill {
   timestamp: string,
-  month: string,
+  monthYear: string,
   coldWaterCounter: number,
   coldWaterUsed: number,
   coldWaterPrice: number,
