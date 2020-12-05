@@ -8,7 +8,7 @@ import { IBill } from '../shared/bill/bill.component'
 @Injectable({
   providedIn: 'root'
 })
-export class MainResolver implements Resolve<IBill> {
+export class CalcResolver implements Resolve<IBill> {
 
   constructor(private _archiveService: ArchiveService, private _router: Router) {
   }

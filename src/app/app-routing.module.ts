@@ -1,14 +1,14 @@
 import { NgModule } from '@angular/core'
 import { RouterModule, Routes } from '@angular/router'
-import { MainResolver } from './main/main.resolver'
+import { CalcResolver } from './calc/calc.resolver'
 
 const routes: Routes = [
-  { path: '', redirectTo: 'main', pathMatch: 'full' },
+  { path: '', redirectTo: 'calc', pathMatch: 'full' },
   {
-    path: 'main',
-    loadChildren: () => import('src/app/main/main.module').then(m => m.MainModule),
+    path: 'calc',
+    loadChildren: () => import('src/app/calc/calc.module').then(m => m.CalcModule),
     resolve: {
-      mainResolver: MainResolver
+      calcResolver: CalcResolver
     }
   },
   {

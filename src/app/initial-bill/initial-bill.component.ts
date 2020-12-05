@@ -105,21 +105,21 @@ export class InitialBillComponent implements OnDestroy {
   ) {
     this.billForm = _fb.group({
       monthYear: [moment(), [Validators.required]],
-      coldWaterCounter: ['777', [Validators.required]],
-      coldWaterUsed: '777',
-      coldWaterPrice: ['777', [Validators.required, zeroValidator]],
-      coldWaterTotal: '777',
-      hotWaterCounter: ['777', [Validators.required]],
-      hotWaterUsed: '777',
-      hotWaterPrice: ['777', [Validators.required, zeroValidator]],
-      hotWaterTotal: '777',
-      waterUtilizationPrice: ['777', [Validators.required, zeroValidator]],
-      waterUtilizationTotal: '777',
-      electricityCounter: ['777', [Validators.required]],
-      electricityUsed: '777',
-      electricityPrice: ['777', [Validators.required, zeroValidator]],
-      electricityTotal: '777',
-      total: '777'
+      coldWaterCounter: ['', [Validators.required]],
+      coldWaterUsed: '',
+      coldWaterPrice: ['', [Validators.required, zeroValidator]],
+      coldWaterTotal: '',
+      hotWaterCounter: ['', [Validators.required]],
+      hotWaterUsed: '',
+      hotWaterPrice: ['', [Validators.required, zeroValidator]],
+      hotWaterTotal: '',
+      waterUtilizationPrice: ['', [Validators.required, zeroValidator]],
+      waterUtilizationTotal: '',
+      electricityCounter: ['', [Validators.required]],
+      electricityUsed: '',
+      electricityPrice: ['', [Validators.required, zeroValidator]],
+      electricityTotal: '',
+      total: ''
     })
   }
 

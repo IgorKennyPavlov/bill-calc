@@ -3,7 +3,7 @@ import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/fo
 import { ActivatedRoute } from '@angular/router'
 import { MatDialog } from '@angular/material/dialog'
 import { Subscription } from 'rxjs'
-import { MainService } from './main.service'
+import { CalcService } from './calc.service'
 import { IBill } from '../shared/bill/bill.component'
 import { getErrorMessage, zeroValidator } from '../shared/validators'
 import { EditPriceDialogComponent } from './edit-price-dialog/edit-price-dialog.component'
@@ -17,11 +17,11 @@ interface ICounterSchema {
 }
 
 @Component({
-  selector: 'app-main',
-  templateUrl: './main.component.html',
-  styleUrls: ['./main.component.scss']
+  selector: 'app-calc',
+  templateUrl: './calc.component.html',
+  styleUrls: ['./calc.component.scss']
 })
-export class MainComponent implements OnDestroy {
+export class CalcComponent implements OnDestroy {
   private _subs: Subscription[] = []
 
   countersForm: FormGroup
@@ -62,7 +62,7 @@ export class MainComponent implements OnDestroy {
 
   constructor(
     private _fb: FormBuilder,
-    private _service: MainService,
+    private _service: CalcService,
     private _activatedRoute: ActivatedRoute,
     private _dialog: MatDialog
   ) {
@@ -73,7 +73,7 @@ export class MainComponent implements OnDestroy {
       electricity: ['00000', [Validators.required, zeroValidator]]
     })
 
-    this.lastBill = this._activatedRoute.snapshot.data.mainResolver
+    this.lastBill = this._activatedRoute.snapshot.data.calcResolver
 
     this.pricesSchema = [
       {

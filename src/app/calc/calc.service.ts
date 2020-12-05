@@ -21,7 +21,7 @@ const RUSSIAN_MONTHS = [
 
 // TODO Отрефакторить всплывашки. Стилизовать под успех/ошибку
 @Injectable()
-export class MainService {
+export class CalcService {
   lastBill: IBill = null
   newBill: IBill = null
 

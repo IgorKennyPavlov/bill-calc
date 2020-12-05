@@ -12,8 +12,8 @@ import { MatDialogModule } from '@angular/material/dialog'
 
 import { SharedModule } from '../shared/shared.module'
 
-import { MainComponent } from './main.component'
-import { MainService } from './main.service'
+import { CalcComponent } from './calc.component'
+import { CalcService } from './calc.service'
 import { CounterRecognizerComponent } from './counter-recognizer/counter-recognizer.component'
 import { EditPriceDialogComponent } from './edit-price-dialog/edit-price-dialog.component'
 
@@ -24,7 +24,7 @@ import { EditPriceDialogComponent } from './edit-price-dialog/edit-price-dialog.
     RouterModule.forChild([
       {
         path: '',
-        component: MainComponent
+        component: CalcComponent
       }
     ]),
     ReactiveFormsModule,
@@ -36,8 +36,8 @@ import { EditPriceDialogComponent } from './edit-price-dialog/edit-price-dialog.
     MatSnackBarModule,
     MatDialogModule
   ],
-  providers: [MainService],
-  declarations: [MainComponent, CounterRecognizerComponent, EditPriceDialogComponent]
+  providers: [CalcService],
+  declarations: [CalcComponent, CounterRecognizerComponent, EditPriceDialogComponent]
 })
-export class MainModule {
+export class CalcModule {
 }

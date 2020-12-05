@@ -5,7 +5,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
 
 import { AppRoutingModule } from './app-routing.module'
 import { AppComponent } from './app.component'
-import { MainModule } from './main/main.module'
+import { CalcModule } from './calc/calc.module'
 
 @NgModule({
   declarations: [
@@ -14,7 +14,7 @@ import { MainModule } from './main/main.module'
   imports: [
     BrowserModule,
     AppRoutingModule,
-    MainModule,
+    CalcModule,
     BrowserAnimationsModule
   ],
   providers: [],

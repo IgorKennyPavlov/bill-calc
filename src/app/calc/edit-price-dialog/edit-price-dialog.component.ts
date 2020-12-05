@@ -1,7 +1,7 @@
 import { Component } from '@angular/core'
 import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms'
 import { getErrorMessage, zeroValidator } from 'src/app/shared/validators'
-import { MainService } from '../main.service'
+import { CalcService } from '../calc.service'
 
 @Component({
   selector: 'app-edit-price-dialog',
@@ -30,7 +30,7 @@ export class EditPriceDialogComponent {
     }
   ]
 
-  constructor(private _fb: FormBuilder, private _service: MainService) {
+  constructor(private _fb: FormBuilder, private _service: CalcService) {
     this.priceForm = _fb.group({
       coldWaterPrice: ['', [Validators.required, zeroValidator]],
       hotWaterPrice: ['', [Validators.required, zeroValidator]],

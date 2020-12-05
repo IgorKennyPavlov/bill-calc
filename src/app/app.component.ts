@@ -10,7 +10,7 @@ export class AppComponent {
   navbarSchema = [
     {
       title: 'Калькулятор',
-      link: '/main'
+      link: '/calc'
     },
     {
       title: 'Архив',

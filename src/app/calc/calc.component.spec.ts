@@ -1,20 +1,20 @@
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing'
 
-import { MainComponent } from './main.component'
+import { CalcComponent } from './calc.component'
 
-describe('MainComponent', () => {
-  let component: MainComponent
-  let fixture: ComponentFixture<MainComponent>
+describe('CalcComponent', () => {
+  let component: CalcComponent
+  let fixture: ComponentFixture<CalcComponent>
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      declarations: [MainComponent]
+      declarations: [CalcComponent]
     })
       .compileComponents()
   }))
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(MainComponent)
+    fixture = TestBed.createComponent(CalcComponent)
     component = fixture.componentInstance
     fixture.detectChanges()
   })
