@@ -4,7 +4,7 @@ import { Document, Model, Schema } from 'mongoose'
 
 export const ArchivedBillSchema = new Schema({
   timestamp: { type: String, required: true },
-  month: { type: String, required: true },
+  monthYear: { type: String, required: true },
   coldWaterCounter: { type: Number, required: true },
   coldWaterUsed: { type: Number, required: true },
   coldWaterPrice: { type: Number, required: true },
@@ -24,7 +24,7 @@ export const ArchivedBillSchema = new Schema({
 
 export interface IBill extends Document {
   timestamp: string,
-  month: string,
+  monthYear: string,
   coldWaterCounter: number,
   coldWaterUsed: number,
   coldWaterPrice: number,
