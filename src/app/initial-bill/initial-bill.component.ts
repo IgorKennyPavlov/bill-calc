@@ -1,6 +1,11 @@
 import { Component } from '@angular/core'
 import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms'
 import { DateAdapter } from '@angular/material/core'
+import { MatDatepicker } from '@angular/material/datepicker'
+
+import * as moment from 'moment'
+import { Moment } from 'moment'
+
 import { getErrorMessage, zeroValidator } from '../shared/validators'
 
 @Component({
@@ -91,7 +96,7 @@ export class InitialBillComponent {
     this.adapter.setLocale('ru-RU')
 
     this.billForm = _fb.group({
-      monthYear: ['', [Validators.required]],
+      monthYear: [moment(), [Validators.required]],
       coldWaterCounter: ['', [Validators.required]],
       coldWaterUsed: '',
       coldWaterPrice: ['', [Validators.required, zeroValidator]],
@@ -108,6 +113,21 @@ export class InitialBillComponent {
       electricityTotal: '',
       total: ''
     })
+  }
+
+  setYear(updatedYear: Moment) {
+    const ctrl = this.billForm.get('monthYear')
+    const ctrlValue = ctrl.value
+    ctrlValue.year(updatedYear.year())
+    ctrl.setValue(ctrlValue)
+  }
+
+  setMonth(updatedMonth: Moment, datepicker: MatDatepicker<any>) {
+    const ctrl = this.billForm.get('monthYear')
+    const ctrlValue = ctrl.value
+    ctrlValue.month(updatedMonth.month())
+    ctrl.setValue(ctrlValue)
+    datepicker.close()
   }
 
   getErrorMessage(ctrl: AbstractControl): string {

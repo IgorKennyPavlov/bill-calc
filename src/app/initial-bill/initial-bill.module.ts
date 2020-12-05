@@ -7,9 +7,26 @@ import { MatFormFieldModule } from '@angular/material/form-field'
 import { MatInputModule } from '@angular/material/input'
 import { MatButtonModule } from '@angular/material/button'
 import { MatDatepickerModule } from '@angular/material/datepicker'
-import { MatNativeDateModule } from '@angular/material/core'
+import {
+  MAT_MOMENT_DATE_ADAPTER_OPTIONS,
+  MatMomentDateModule,
+  MomentDateAdapter
+} from '@angular/material-moment-adapter'
+import { DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE } from '@angular/material/core'
 
 import { InitialBillComponent } from './initial-bill.component'
+
+const MY_FORMATS = {
+  parse: {
+    dateInput: 'MM/YYYY'
+  },
+  display: {
+    dateInput: 'MM/YYYY',
+    monthYearLabel: 'MMM YYYY',
+    dateA11yLabel: 'LL',
+    monthYearA11yLabel: 'MMMM YYYY'
+  }
+}
 
 @NgModule({
   imports: [
@@ -26,9 +43,18 @@ import { InitialBillComponent } from './initial-bill.component'
     MatInputModule,
     MatButtonModule,
     MatDatepickerModule,
-    MatNativeDateModule
+    MatMomentDateModule
   ],
-  declarations: [InitialBillComponent]
+  declarations: [InitialBillComponent],
+  providers: [
+    {
+      provide: DateAdapter,
+      useClass: MomentDateAdapter,
+      deps: [MAT_DATE_LOCALE, MAT_MOMENT_DATE_ADAPTER_OPTIONS]
+    },
+
+    { provide: MAT_DATE_FORMATS, useValue: MY_FORMATS }
+  ]
 })
 export class InitialBillModule {
 }

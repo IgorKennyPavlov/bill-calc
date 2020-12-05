@@ -14,14 +14,14 @@
              [matDatepicker]="dp"
              [required]="field.required"
              (focus)="dp.open()">
-      <!--TODO сделать выбор только для месяца и года, убрать день-->
       <mat-datepicker-toggle matSuffix
                              [for]="dp">
       </mat-datepicker-toggle>
 
       <mat-datepicker #dp
-                      panelClass="example-month-picker"
-                      startView="multi-year">
+                      startView="multi-year"
+                      (monthSelected)="setMonth($event, dp)"
+                      (yearSelected)="setYear($event)">
       </mat-datepicker>
     </ng-container>
 
