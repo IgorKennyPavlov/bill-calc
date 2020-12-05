@@ -1,23 +1,11 @@
 import { Injectable } from '@angular/core'
 import { MatSnackBar } from '@angular/material/snack-bar'
 import { FormBuilder } from '@angular/forms'
+
+import * as moment from 'moment'
+
 import { ArchiveService } from '../archive/archive.service'
 import { IBill } from '../shared/bill/bill.component'
-
-const RUSSIAN_MONTHS = [
-  'январь',
-  'февраль',
-  'март',
-  'апрель',
-  'май',
-  'июнь',
-  'июль',
-  'август',
-  'сентябрь',
-  'октябрь',
-  'ноябрь',
-  'декабрь'
-]
 
 // TODO Отрефакторить всплывашки. Стилизовать под успех/ошибку
 @Injectable()
@@ -64,11 +52,6 @@ export class CalcService {
       return
     }
 
-    // TODO даты на moment
-    const now = new Date()
-    const month = RUSSIAN_MONTHS[(now.getMonth() || 12) - 1]
-    const year = now.getFullYear()
-
     const coldWaterUsed = coldWaterCounter - oldColdWaterCounter
     const hotWaterUsed = hotWaterCounter - oldHotWaterCounter
     const electricityUsed = electricityCounter - oldElectricityCounter
@@ -80,9 +63,11 @@ export class CalcService {
 
     const total = ~~((coldWaterTotal + hotWaterTotal + waterUtilizationTotal + electricityTotal) * 100) / 100
 
+    const now = moment()
+
     this.newBill = {
       timestamp: now.toISOString(),
-      monthYear: month + ' ' + year,
+      monthYear: now.format('MMMM YYYY'),
 
       coldWaterCounter,
       coldWaterUsed,
