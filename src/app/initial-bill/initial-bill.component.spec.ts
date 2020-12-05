@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing'
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing'
 
 import { InitialBillComponent } from './initial-bill.component'
 
@@ -6,7 +6,7 @@ describe('CreateInitialBillDialogComponent', () => {
   let component: InitialBillComponent
   let fixture: ComponentFixture<InitialBillComponent>
 
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       declarations: [InitialBillComponent]
     })
