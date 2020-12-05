@@ -1,25 +1,25 @@
-import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing'
 
-import { EditPriceDialogComponent } from './edit-price-dialog.component';
+import { EditPriceDialogComponent } from './edit-price-dialog.component'
 
 describe('EditPriceDialogComponent', () => {
-  let component: EditPriceDialogComponent;
-  let fixture: ComponentFixture<EditPriceDialogComponent>;
+  let component: EditPriceDialogComponent
+  let fixture: ComponentFixture<EditPriceDialogComponent>
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      declarations: [ EditPriceDialogComponent ]
+      declarations: [EditPriceDialogComponent]
     })
-    .compileComponents();
-  }));
+      .compileComponents()
+  }))
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(EditPriceDialogComponent);
-    component = fixture.componentInstance;
-    fixture.detectChanges();
-  });
+    fixture = TestBed.createComponent(EditPriceDialogComponent)
+    component = fixture.componentInstance
+    fixture.detectChanges()
+  })
 
   it('should create', () => {
-    expect(component).toBeTruthy();
-  });
-});
+    expect(component).toBeTruthy()
+  })
+})
