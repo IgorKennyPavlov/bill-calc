@@ -1,0 +1,44 @@
+<h2>Не удалось получить данные последнего платежа</h2>
+<p>Придётся заполнить ручками, либо ещё раз перейти в калькулятор (вдруг прокатит) =)</p>
+
+<form class="init-bill-form"
+      [formGroup]="billForm">
+  <mat-form-field *ngFor="let field of billFormSchema"
+                  appearance="fill"
+                  [ngSwitch]="field.type">
+    <mat-label>{{ field.title }}</mat-label>
+
+    <ng-container *ngSwitchCase="'date'">
+      <input matInput
+             [formControlName]="field.ctrlName"
+             [matDatepicker]="dp"
+             [required]="field.required"
+             (focus)="dp.open()">
+      <mat-datepicker-toggle matSuffix
+                             [for]="dp">
+      </mat-datepicker-toggle>
+
+      <mat-datepicker #dp
+                      startView="multi-year"
+                      (monthSelected)="setMonth($event, dp)"
+                      (yearSelected)="setYear($event)">
+      </mat-datepicker>
+    </ng-container>
+
+    <ng-container *ngSwitchDefault>
+      <input matInput
+             [formControlName]="field.ctrlName"
+             [required]="field.required">
+    </ng-container>
+
+
+    <mat-error>{{ getErrorMessage(billForm.get(field.ctrlName)) }}</mat-error>
+  </mat-form-field>
+</form>
+
+<button color="primary"
+        mat-raised-button
+        [disabled]="!billForm.valid"
+        (click)="saveInitialBill()">
+  Сохранить
+</button>

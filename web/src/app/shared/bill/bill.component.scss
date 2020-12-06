@@ -1,0 +1,27 @@
+:host {
+  display: block;
+
+  h3 {
+    font-weight: bold;
+  }
+
+  .counters-data-wrap {
+    display: flex;
+    justify-content: space-between;
+  }
+
+  .total {
+    text-transform: uppercase;
+    margin-top: 20px;
+  }
+}
+
+@media screen and (max-width: 991px) {
+  .counters-data-wrap {
+    flex-direction: column;
+
+    .counter-data {
+      margin: 20px 0;
+    }
+  }
+}

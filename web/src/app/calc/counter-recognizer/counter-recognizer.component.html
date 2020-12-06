@@ -1,0 +1,21 @@
+<canvas class="preview-canvas"
+        #preview>
+</canvas>
+
+<button class="btn"
+        color="accent"
+        mat-raised-button
+        (click)="photos.click()">
+  Загрузить фото
+</button>
+
+<input #photos
+       id="counters"
+       name="counters"
+       type="file"
+       (change)="onLoad($event)">
+
+<h4 [style.visibility]="workerInfo ? 'visible' : 'hidden'"
+    class="loading-progress">
+  {{ loadingProgress }}
+</h4>

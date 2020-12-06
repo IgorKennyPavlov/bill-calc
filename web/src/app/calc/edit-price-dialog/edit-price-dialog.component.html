@@ -1,0 +1,27 @@
+<h2 mat-dialog-title>Редактирование цен</h2>
+
+<mat-dialog-content>
+  <form class="price-edit-form"
+        [formGroup]="priceForm">
+    <mat-form-field *ngFor="let field of priceFormSchema"
+                    appearance="fill">
+      <mat-label>{{ field.title }}</mat-label>
+      <input matInput
+             [formControlName]="field.formCtrlName">
+      <mat-error>{{getErrorMessage(priceForm.get(field.formCtrlName))}}</mat-error>
+    </mat-form-field>
+  </form>
+</mat-dialog-content>
+
+<mat-dialog-actions>
+  <button mat-dialog-close
+          mat-raised-button>
+    Закрыть
+  </button>
+  <button color="primary"
+          mat-raised-button
+          [disabled]="!priceForm.valid"
+          [mat-dialog-close]="priceForm.value">
+    Сохранить
+  </button>
+</mat-dialog-actions>

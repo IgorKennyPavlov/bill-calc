@@ -1,0 +1,13 @@
+:host {
+  display: flex;
+  flex-wrap: wrap;
+  margin: 20px;
+}
+
+mat-accordion {
+  width: 100%;
+
+  mat-panel-title {
+    text-transform: capitalize;
+  }
+}

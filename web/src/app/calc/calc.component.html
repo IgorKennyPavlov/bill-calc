@@ -1,0 +1,65 @@
+<form class="counter-recognizers"
+      [formGroup]="countersForm">
+  <div *ngFor="let counter of countersSchema"
+       class="cr-form">
+    <h2 class="title"
+        [ngClass]="counter.titleClass">
+      {{ counter.title }}
+    </h2>
+    <app-counter-recognizer [brightness]="counter.brightness"
+                            [contrast]="counter.contrast"
+                            (ocrComplete)="countersForm.get(counter.formCtrlName).setValue($event)">
+    </app-counter-recognizer>
+    <mat-form-field appearance="fill">
+      <mat-label>Счётчик</mat-label>
+      <input matInput
+             [formControlName]="counter.formCtrlName">
+      <mat-error>{{getErrorMessage(countersForm.get(counter.formCtrlName))}}</mat-error>
+    </mat-form-field>
+  </div>
+</form>
+
+<div class="price-panel">
+  <h2>Цены</h2>
+  <div *ngFor="let price of pricesSchema"
+       class="price-wrap">
+    <div class="title">{{ price.title }}</div>
+    <div class="price">{{ price.value }}</div>
+  </div>
+  <button class="open-edit-dialog-btn"
+          mat-raised-button
+          (click)="openEditPriceDialog()">
+    Редактировать
+  </button>
+</div>
+
+<app-bill *ngIf="newBill"
+          [billData]="newBill">
+</app-bill>
+
+<div class="btn-panel">
+  <button *ngIf="!newBill; else newBillActions"
+          class="btn"
+          color="primary"
+          mat-raised-button
+          [disabled]="!countersForm.valid"
+          (click)="calculateBill()">
+    Посчитать стоимость
+  </button>
+
+  <ng-template #newBillActions>
+    <button class="btn"
+            color="warn"
+            mat-raised-button
+            (click)="clearNewBill()">
+      Отменить
+    </button>
+    <button class="btn"
+            color="accent"
+            mat-raised-button
+            (click)="saveNewBill()">
+      Сохранить
+    </button>
+  </ng-template>
+</div>
+
