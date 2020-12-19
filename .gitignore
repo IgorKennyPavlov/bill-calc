@@ -1,6 +1,9 @@
 # dependencies
 node_modules
 
+# certificates
+/cert
+
 # compiled output
 dist
 out-tsc
