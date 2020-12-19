@@ -4,7 +4,7 @@ import { createWorker } from 'tesseract.js'
 @Component({
   selector: 'app-counter-recognizer',
   templateUrl: './counter-recognizer.component.html',
-  styleUrls: ['./counter-recognizer.component.scss']
+  styleUrls: ['./counter-recognizer.component.scss'],
 })
 export class CounterRecognizerComponent {
   @ViewChild('preview', { read: ElementRef }) previewCanvasRef: ElementRef<HTMLCanvasElement>

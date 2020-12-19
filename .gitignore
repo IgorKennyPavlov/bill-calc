@@ -1,10 +1,10 @@
 # dependencies
-/node_modules
+node_modules
 
 # compiled output
-/dist
-/out-tsc
-/tmp
+dist
+out-tsc
+tmp
 
 # Logs
 logs

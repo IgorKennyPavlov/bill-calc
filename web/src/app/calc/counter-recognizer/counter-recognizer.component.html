@@ -2,20 +2,20 @@
         #preview>
 </canvas>
 
-<button class="btn"
-        color="accent"
+<button class='btn'
+        color='accent'
         mat-raised-button
-        (click)="photos.click()">
+        (click)='photo.click()'>
   Загрузить фото
 </button>
 
-<input #photos
-       id="counters"
-       name="counters"
-       type="file"
-       (change)="onLoad($event)">
+<input #photo
+       id='counter'
+       name='counter'
+       type='file'
+       (change)='onLoad($event)'>
 
-<h4 [style.visibility]="workerInfo ? 'visible' : 'hidden'"
-    class="loading-progress">
+<h4 class="loading-progress"
+    [style.visibility]="workerInfo ? 'visible' : 'hidden'">
   {{ loadingProgress }}
 </h4>
