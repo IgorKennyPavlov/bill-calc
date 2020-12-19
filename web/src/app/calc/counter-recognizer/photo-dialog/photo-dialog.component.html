@@ -1,0 +1,46 @@
+<div *ngIf='!showPreview'
+     class='camera'>
+  <video class='camera--video'
+         #video>
+  </video>
+
+  <div class='camera--frame'></div>
+
+  <button class='camera--btn'
+          mat-fab
+          (click)='takePhoto()'>
+    <mat-icon aria-hidden='false'
+              aria-label='Сделать фото'>
+      camera
+    </mat-icon>
+  </button>
+</div>
+
+<div *ngIf='showPreview'
+     class='preview'>
+  <canvas class='preview-cnv'
+          #preview>
+  </canvas>
+
+  <div class='preview--btn-panel'>
+    <button class='preview--btn'
+            mat-fab
+            (click)='savePhoto()'>
+      <mat-icon aria-hidden='false'
+                aria-label='Сохранить фото'>
+        save
+      </mat-icon>
+    </button>
+
+    <button class='preview--btn'
+            color='warn'
+            mat-fab
+            (click)='clearPhoto()'>
+      <mat-icon aria-hidden='false'
+                aria-label='Переделать фото'>
+        clear
+      </mat-icon>
+    </button>
+  </div>
+</div>
+

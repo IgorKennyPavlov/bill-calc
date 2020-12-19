@@ -1,0 +1,54 @@
+$take-photo-btn-size: 60px;
+
+:host {
+  width: fit-content;
+  height: fit-content;
+}
+
+
+.camera {
+  position: relative;
+  max-height: 80vh;
+
+  &--video {
+    max-width: 100%;
+    max-height: 80vh;
+  }
+
+  &--frame {
+    position: absolute;
+    top: 40%;
+    left: 10%;
+    width: 80%;
+    height: 20%;
+    border: 1px solid #fff;
+  }
+
+  &--btn {
+    position: absolute;
+    bottom: 20px;
+    left: calc(50% - #{$take-photo-btn-size} / 2);
+    width: $take-photo-btn-size;
+    height: $take-photo-btn-size;
+  }
+}
+
+.preview {
+  max-height: 80vh;
+
+  &--cnv {
+    max-width: 100%;
+  }
+
+  &--btn-panel {
+    bottom: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+  }
+
+  &--btn {
+    margin: 0 4px;
+  }
+}

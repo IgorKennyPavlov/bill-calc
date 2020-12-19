@@ -9,6 +9,7 @@ import { MatFormFieldModule } from '@angular/material/form-field'
 import { MatInputModule } from '@angular/material/input'
 import { MatSnackBarModule } from '@angular/material/snack-bar'
 import { MatDialogModule } from '@angular/material/dialog'
+import { MatIconModule } from '@angular/material/icon'
 
 import { SharedModule } from '../shared/shared.module'
 
@@ -16,6 +17,7 @@ import { CalcComponent } from './calc.component'
 import { CalcService } from './calc.service'
 import { CounterRecognizerComponent } from './counter-recognizer/counter-recognizer.component'
 import { EditPriceDialogComponent } from './edit-price-dialog/edit-price-dialog.component'
+import { PhotoDialogComponent } from './counter-recognizer/photo-dialog/photo-dialog.component'
 
 @NgModule({
   imports: [
@@ -34,10 +36,11 @@ import { EditPriceDialogComponent } from './edit-price-dialog/edit-price-dialog.
     MatFormFieldModule,
     MatInputModule,
     MatSnackBarModule,
+    MatIconModule,
     MatDialogModule
   ],
   providers: [CalcService],
-  declarations: [CalcComponent, CounterRecognizerComponent, EditPriceDialogComponent]
+  declarations: [CalcComponent, CounterRecognizerComponent, EditPriceDialogComponent, PhotoDialogComponent]
 })
 export class CalcModule {
 }

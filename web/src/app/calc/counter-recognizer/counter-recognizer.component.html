@@ -1,19 +1,30 @@
-<canvas class="preview-canvas"
-        #preview>
-</canvas>
-
-<button class='btn'
-        color='accent'
-        mat-raised-button
-        (click)='photo.click()'>
-  Загрузить фото
-</button>
-
 <input #photo
        id='counter'
        name='counter'
        type='file'
        (change)='onLoad($event)'>
+
+<canvas class='preview-canvas'
+        #preview>
+</canvas>
+
+<div class='btn-panel'>
+  <button class='btn'
+          color='accent'
+          mat-raised-button
+          (click)='openPhotoDialog()'>
+    <mat-icon aria-hidden='false'
+              aria-label='Запустить камеру'>
+      camera_alt
+    </mat-icon>
+  </button>
+  <button class='btn'
+          color='accent'
+          mat-raised-button
+          (click)='photo.click()'>
+    Загрузить фото
+  </button>
+</div>
 
 <h4 class="loading-progress"
     [style.visibility]="workerInfo ? 'visible' : 'hidden'">
