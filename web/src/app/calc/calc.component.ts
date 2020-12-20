@@ -14,6 +14,7 @@ interface ICounterSchema {
   formCtrlName: string
   brightness?: number
   contrast?: number
+  invert?: boolean
 }
 
 @Component({
@@ -32,19 +33,24 @@ export class CalcComponent implements OnDestroy {
     {
       title: 'Холодная вода',
       titleClass: 'cold-water',
-      formCtrlName: 'coldWater'
+      formCtrlName: 'coldWater',
+      brightness: 2.4,
+      contrast: 10
     },
     {
       title: 'Горячая вода',
       titleClass: 'hot-water',
-      formCtrlName: 'hotWater'
+      formCtrlName: 'hotWater',
+      brightness: 2.4,
+      contrast: 10
     },
     {
       title: 'Эл. энергия',
       titleClass: 'electricity',
       formCtrlName: 'electricity',
       brightness: 1.4,
-      contrast: 30
+      contrast: 30,
+      invert: true
     }
   ]
 

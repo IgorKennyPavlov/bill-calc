@@ -9,10 +9,12 @@ import { MatDialogRef } from '@angular/material/dialog'
 export class PhotoDialogComponent implements AfterViewInit, OnDestroy {
   @ViewChild('preview', { read: ElementRef, static: false }) previewCnvRef: ElementRef<HTMLCanvasElement>
   @ViewChild('video', { read: ElementRef, static: false }) videoRef: ElementRef<HTMLVideoElement>
-  showPreview = false
+
   private _stream: MediaStream
   private _track: MediaStreamTrack
   private _cropCnv: HTMLCanvasElement = null
+
+  showPreview = false
 
   constructor(private _host: MatDialogRef<PhotoDialogComponent>) {
   }
@@ -75,15 +77,7 @@ export class PhotoDialogComponent implements AfterViewInit, OnDestroy {
 
     if (!this._track) {
       this._track = this._stream.getVideoTracks()[0]
-      // TODO: Отрегулировать параметры фотки
-      // console.log(this._track.getCapabilities())
-      // await this._track.applyConstraints({
-      //   advanced: [{
-      //     saturation: 0,
-      //     brightness: 0,
-      //     contrast: 50
-      //   }]
-      // })
+      this._track.applyConstraints({ advanced: [{ torch: true }] })
     }
 
     const video = this.videoRef.nativeElement

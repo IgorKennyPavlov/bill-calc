@@ -8,6 +8,7 @@
     </h2>
     <app-counter-recognizer [brightness]="counter.brightness"
                             [contrast]="counter.contrast"
+                            [invert]="counter.invert"
                             (ocrComplete)="countersForm.get(counter.formCtrlName).setValue($event)">
     </app-counter-recognizer>
     <mat-form-field appearance="fill">

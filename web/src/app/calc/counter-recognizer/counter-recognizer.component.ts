@@ -18,6 +18,7 @@ export class CounterRecognizerComponent implements OnDestroy {
 
   @Input() brightness = 2.4
   @Input() contrast = 10
+  @Input() invert = false
 
   @Output() ocrComplete = new EventEmitter<string>()
 
@@ -55,7 +56,7 @@ export class CounterRecognizerComponent implements OnDestroy {
     await worker.load()
     await worker.loadLanguage('eng')
     await worker.initialize('eng')
-    await worker.setParameters({ tessedit_char_whitelist: '0123456789.,' })
+    await worker.setParameters({ tessedit_char_whitelist: '0123456789' })
     const { data: { text } } = await worker.recognize(file)
     this.workerInfo = null
     await worker.terminate()
@@ -63,14 +64,15 @@ export class CounterRecognizerComponent implements OnDestroy {
   }
 
   openPhotoDialog() {
+    const config = { brightness: .85, contrast: 30 }
     this._subs.push(
       this._dialog.open(PhotoDialogComponent, { maxWidth: '95vw', maxHeight: '90vh' })
         .afterClosed()
-        .subscribe((cropCnv: HTMLCanvasElement) => this._handleImage(cropCnv))
+        .subscribe((cropCnv: HTMLCanvasElement) => this._handleImage(cropCnv, config))
     )
   }
 
-  private async _handleImage(img: HTMLImageElement | HTMLCanvasElement) {
+  private async _handleImage(img: HTMLImageElement | HTMLCanvasElement, config?: { brightness?: number, contrast?: number }) {
     // Рисуем превью
     const previewCnv = this.previewCanvasRef.nativeElement
     previewCnv
@@ -81,12 +83,18 @@ export class CounterRecognizerComponent implements OnDestroy {
     const virtualCnv = document.createElement('canvas')
     const virtualCnvCtx = virtualCnv.getContext('2d')
 
-    // Фильтруем фотку в виртуальном канвасе
-    virtualCnvCtx.filter = `grayscale(100%) brightness(${ this.brightness || 2.4 }) contrast(${ this.contrast || 10 })`
-    virtualCnvCtx.drawImage(img, 0, 0, img.width, img.height, 0, 0, virtualCnv.width, virtualCnv.height)
+    const brightness = config?.brightness || this.brightness
+    const contrast = config?.contrast || this.contrast
 
-    // Удалить после настройки фотки
-    // document.body.prepend(virtualCnv)
+    // Фильтруем фотку в виртуальном канвасе
+    let filterString = `grayscale(100%) brightness(${ brightness }) contrast(${ contrast })`
+
+    if (this.invert) {
+      filterString += ' invert(100%)'
+    }
+
+    virtualCnvCtx.filter = filterString
+    virtualCnvCtx.drawImage(img, 0, 0, img.width, img.height, 0, 0, virtualCnv.width, virtualCnv.height)
 
     // Распознаём, отрезаем до запятой, запоминаем
     this.ocrComplete.emit((await this._ocrImg(virtualCnv.toDataURL())).slice(0, 5))
