@@ -58,7 +58,7 @@ export class CalcComponent implements OnDestroy {
     return this._service.lastBill
   }
 
-  set lastBill(newVal) {
+  set lastBill(newVal: IBill) {
     this._service.lastBill = newVal
   }
 
