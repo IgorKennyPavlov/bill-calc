@@ -14,6 +14,8 @@
     <mat-form-field appearance="fill">
       <mat-label>Счётчик</mat-label>
       <input matInput
+             type="number"
+             placeholder="00000"
              [formControlName]="counter.formCtrlName">
       <mat-error>{{getErrorMessage(countersForm.get(counter.formCtrlName))}}</mat-error>
     </mat-form-field>

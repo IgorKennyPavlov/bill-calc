@@ -74,9 +74,9 @@ export class CalcComponent implements OnDestroy {
   ) {
     // TODO типизировать через объект
     this.countersForm = _fb.group({
-      coldWater: ['00000', [Validators.required, zeroValidator]],
-      hotWater: ['00000', [Validators.required, zeroValidator]],
-      electricity: ['00000', [Validators.required, zeroValidator]]
+      coldWater: ['', [Validators.required, zeroValidator]],
+      hotWater: ['', [Validators.required, zeroValidator]],
+      electricity: ['', [Validators.required, zeroValidator]]
     })
 
     this.lastBill = this._activatedRoute.snapshot.data.calcResolver
